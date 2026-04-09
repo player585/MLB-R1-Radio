@@ -523,10 +523,27 @@ function setFocus(idx) {
   cards.forEach((c, i) => c.classList.toggle('focused', i === idx));
   cards[idx].scrollIntoView({block:'nearest', behavior:'auto'});
 }
+// ── R1 hardware events ──
+window.addEventListener('scrollUp', () => setFocus(S.focusIdx - 1));
+window.addEventListener('scrollDown', () => setFocus(S.focusIdx + 1));
+window.addEventListener('sideClick', () => {
+  const c = getCards();
+  if (c[S.focusIdx]) toggleCard(c[S.focusIdx]);
+});
+window.addEventListener('longPressStart', () => {
+  const tabs = Array.from(document.querySelectorAll('.tab'));
+  const curIdx = tabs.findIndex(t => t.classList.contains('active'));
+  const nextIdx = (curIdx + 1) % tabs.length;
+  tabs[nextIdx].click();
+});
+
+// ── Keyboard fallbacks (browser testing) ──
 window.addEventListener('keydown', e => {
   if (e.key === 'ArrowUp' || e.key === 'AudioVolumeUp') { setFocus(S.focusIdx-1); e.preventDefault(); }
   else if (e.key === 'ArrowDown' || e.key === 'AudioVolumeDown') { setFocus(S.focusIdx+1); e.preventDefault(); }
   else if (e.key === 'Enter' || e.key === ' ') { const c = getCards(); if (c[S.focusIdx]) toggleCard(c[S.focusIdx]); e.preventDefault(); }
+  else if (e.key === 'ArrowRight') { const tabs = Array.from(document.querySelectorAll('.tab')); const i = tabs.findIndex(t => t.classList.contains('active')); tabs[(i+1)%tabs.length].click(); }
+  else if (e.key === 'ArrowLeft') { const tabs = Array.from(document.querySelectorAll('.tab')); const i = tabs.findIndex(t => t.classList.contains('active')); tabs[(i-1+tabs.length)%tabs.length].click(); }
 });
 
 // ── Load ──
