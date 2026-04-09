@@ -8,283 +8,166 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ─── DESIGN TOKENS ─── */
-:root, [data-theme="dark"] {
-  --color-bg:              #0d0f0e;
-  --color-surface:         #131615;
-  --color-surface-2:       #191c1a;
-  --color-surface-offset:  #1f2320;
-  --color-surface-dynamic: #252928;
-  --color-divider:         #2a2e2c;
-  --color-border:          #333836;
-  --color-text:            #e8ebe9;
-  --color-text-muted:      #7a8078;
-  --color-text-faint:      #4a4f4d;
-  --color-text-inverse:    #0d0f0e;
-  --color-primary:         #c8102e;
-  --color-primary-hover:   #a50d26;
-  --color-win:             #22c55e;
-  --color-loss:            #ef4444;
-  --color-live:            #f59e0b;
-  --color-final:           #7a8078;
-  --color-sched:           #5591c7;
-  --color-radio:           #3b82f6;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-full: 9999px;
-  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
-  --space-4: 1rem;    --space-5: 1.25rem; --space-6: 1.5rem;
-  --font-body: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --text-xs: 0.5625rem;
-  --text-sm: 0.625rem;
-  --text-base: 0.6875rem;
-  --text-md: 0.8125rem;
-  --text-lg: 0.9375rem;
-  --text-xl: 1.0625rem;
-  --transition: 160ms cubic-bezier(0.16, 1, 0.3, 1);
+:root,[data-theme="dark"]{
+  --color-bg:#0d0f0e;--color-surface:#131615;--color-surface-2:#191c1a;
+  --color-surface-offset:#1f2320;--color-surface-dynamic:#252928;
+  --color-divider:#2a2e2c;--color-border:#333836;
+  --color-text:#e8ebe9;--color-text-muted:#7a8078;--color-text-faint:#4a4f4d;
+  --color-primary:#c8102e;--color-win:#22c55e;--color-loss:#ef4444;
+  --color-live:#f59e0b;--color-final:#7a8078;--color-sched:#5591c7;
+  --color-radio:#3b82f6;
+  --radius-sm:.25rem;--radius-md:.375rem;--radius-lg:.5rem;--radius-full:9999px;
+  --sp1:.25rem;--sp2:.5rem;--sp3:.75rem;--sp4:1rem;--sp6:1.5rem;
+  --font-body:'Inter',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono','Fira Code',monospace;
+  --txs:.5625rem;--tsm:.625rem;--tbase:.6875rem;--tmd:.8125rem;--tlg:.9375rem;
+  --tr:160ms cubic-bezier(.16,1,.3,1);
 }
-[data-theme="light"] {
-  --color-bg:              #f4f5f4;
-  --color-surface:         #ffffff;
-  --color-surface-2:       #f9faf9;
-  --color-surface-offset:  #eef0ee;
-  --color-surface-dynamic: #e5e8e5;
-  --color-divider:         #dce0dc;
-  --color-border:          #d0d4d0;
-  --color-text:            #111412;
-  --color-text-muted:      #5a625a;
-  --color-text-faint:      #9aa09a;
-  --color-text-inverse:    #f4f5f4;
+[data-theme="light"]{
+  --color-bg:#f4f5f4;--color-surface:#fff;--color-surface-2:#f9faf9;
+  --color-surface-offset:#eef0ee;--color-surface-dynamic:#e5e8e5;
+  --color-divider:#dce0dc;--color-border:#d0d4d0;
+  --color-text:#111412;--color-text-muted:#5a625a;--color-text-faint:#9aa09a;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:none;text-size-adjust:none;-webkit-font-smoothing:antialiased;height:100%}
+body{font-family:var(--font-body);font-size:var(--tbase);color:var(--color-text);
+  background:var(--color-bg);height:100dvh;overflow:hidden;display:flex;
+  flex-direction:column;max-width:240px;margin:0 auto}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+a,button{transition:color var(--tr),background var(--tr),opacity var(--tr)}
+a{text-decoration:none;color:inherit}
 
-/* ─── BASE ─── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: none; text-size-adjust: none; -webkit-font-smoothing: antialiased; height: 100%; }
-body {
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  color: var(--color-text);
-  background: var(--color-bg);
-  height: 100dvh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  max-width: 240px;
-  margin: 0 auto;
-}
-button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
-a, button { transition: color var(--transition), background var(--transition), opacity var(--transition); }
-a { text-decoration: none; color: inherit; }
+.app-header{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--sp2) var(--sp3);background:var(--color-surface);
+  border-bottom:1px solid var(--color-divider);flex-shrink:0;gap:var(--sp2)}
+.header-logo{display:flex;align-items:center;gap:var(--sp2)}
+.header-title{font-size:var(--tsm);font-weight:700;letter-spacing:-.01em;line-height:1}
+.header-title span{color:var(--color-primary)}
+.header-controls{display:flex;align-items:center;gap:var(--sp2)}
+.live-dot{width:7px;height:7px;border-radius:var(--radius-full);
+  background:var(--color-radio);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
+.btn-icon{min-width:32px;min-height:32px;width:32px;height:32px;
+  border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;
+  color:var(--color-text-muted);background:var(--color-surface-offset)}
+.btn-icon:active{background:var(--color-surface-dynamic);color:var(--color-text)}
 
-/* ─── HEADER ─── */
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-2) var(--space-3);
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-divider);
-  flex-shrink: 0;
-  gap: var(--space-2);
-}
-.header-logo { display: flex; align-items: center; gap: var(--space-2); }
-.header-title { font-size: var(--text-sm); font-weight: 700; letter-spacing: -0.01em; line-height: 1; }
-.header-title span { color: var(--color-primary); }
-.header-controls { display: flex; align-items: center; gap: var(--space-2); }
-.live-dot {
-  width: 7px; height: 7px;
-  border-radius: var(--radius-full);
-  background: var(--color-radio);
-  animation: pulse 1.8s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.5; transform: scale(0.75); }
-}
-.btn-icon {
-  min-width: 32px; min-height: 32px;
-  width: 32px; height: 32px;
-  border-radius: var(--radius-md);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--color-text-muted);
-  background: var(--color-surface-offset);
-}
-.btn-icon:active { background: var(--color-surface-dynamic); color: var(--color-text); }
+.status-bar{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--sp1) var(--sp3);
+  background:color-mix(in oklch,var(--color-primary) 8%,var(--color-surface));
+  border-bottom:1px solid var(--color-divider);flex-shrink:0}
+.status-text{font-size:var(--txs);color:var(--color-text-muted);font-family:var(--font-mono)}
+.status-date{font-size:var(--txs);font-weight:600;color:var(--color-text);font-family:var(--font-mono)}
+.vmwk{font-size:.4375rem;font-family:var(--font-mono);color:var(--color-text-faint);opacity:.45;line-height:1}
 
-/* ─── STATUS BAR ─── */
-.status-bar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--space-1) var(--space-3);
-  background: color-mix(in oklch, var(--color-primary) 8%, var(--color-surface));
-  border-bottom: 1px solid var(--color-divider);
-  flex-shrink: 0;
-}
-.status-text  { font-size: var(--text-xs); color: var(--color-text-muted); font-family: var(--font-mono); }
-.status-date  { font-size: var(--text-xs); font-weight: 600; color: var(--color-text); font-family: var(--font-mono); }
-.version-watermark { font-size: 0.4375rem; font-family: var(--font-mono); color: var(--color-text-faint); opacity: 0.45; line-height: 1; }
+.main-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;
+  scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;scrollbar-color:var(--color-border) transparent}
+.main-scroll::-webkit-scrollbar{width:3px}
+.main-scroll::-webkit-scrollbar-thumb{background:var(--color-border);border-radius:var(--radius-full)}
 
-/* ─── MAIN SCROLL AREA ─── */
-.main-scroll {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
-}
-.main-scroll::-webkit-scrollbar { width: 3px; }
-.main-scroll::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
+.games-list{padding:var(--sp2);display:flex;flex-direction:column;gap:var(--sp2)}
+.game-card{background:var(--color-surface);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);overflow:hidden;
+  transition:box-shadow var(--tr),transform var(--tr)}
+.game-card:active{transform:scale(.985)}
+.game-card.focused{border-color:var(--color-radio);box-shadow:0 0 0 1.5px var(--color-radio)}
+.game-card.open{border-color:var(--color-primary);box-shadow:0 0 0 1px var(--color-primary)}
 
-/* ─── GAME CARDS ─── */
-.games-list { padding: var(--space-2); display: flex; flex-direction: column; gap: var(--space-2); }
-.game-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  transition: box-shadow var(--transition), transform var(--transition);
-}
-.game-card:active { transform: scale(0.985); }
-.game-card.focused { border-color: var(--color-radio); box-shadow: 0 0 0 1.5px var(--color-radio); }
-.game-card.open { border-color: var(--color-primary); box-shadow: 0 0 0 1px var(--color-primary); }
+.game-card-header{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--sp2) var(--sp3);border-bottom:1px solid var(--color-divider);
+  background:var(--color-surface-2)}
+.badge{font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+  padding:1px 4px;border-radius:var(--radius-full);font-family:var(--font-mono)}
+.badge-live{background:color-mix(in oklch,var(--color-live) 18%,transparent);color:var(--color-live)}
+.badge-final{background:color-mix(in oklch,var(--color-final) 18%,transparent);color:var(--color-final)}
+.badge-sched{background:color-mix(in oklch,var(--color-sched) 18%,transparent);color:var(--color-sched)}
+.game-venue{font-size:.5rem;color:var(--color-text-faint);font-family:var(--font-mono)}
 
-.game-card-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--space-2) var(--space-3);
-  border-bottom: 1px solid var(--color-divider);
-  background: var(--color-surface-2);
-}
-.game-status-badge {
-  font-size: 0.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
-  padding: 1px 4px; border-radius: var(--radius-full); font-family: var(--font-mono);
-}
-.badge-live  { background: color-mix(in oklch, var(--color-live)  18%, transparent); color: var(--color-live); }
-.badge-final { background: color-mix(in oklch, var(--color-final) 18%, transparent); color: var(--color-final); }
-.badge-sched { background: color-mix(in oklch, var(--color-sched) 18%, transparent); color: var(--color-sched); }
-.game-venue { font-size: 0.5rem; color: var(--color-text-faint); font-family: var(--font-mono); }
+.game-matchup{padding:var(--sp2) var(--sp3);display:flex;flex-direction:column;gap:var(--sp1)}
+.team-row{display:flex;align-items:center;gap:var(--sp2)}
+.team-abbr{font-family:var(--font-mono);font-weight:700;font-size:var(--tsm);
+  width:28px;flex-shrink:0;letter-spacing:.02em}
+.team-name{font-size:var(--txs);color:var(--color-text-muted);flex:1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-score{font-family:var(--font-mono);font-weight:700;font-size:var(--tmd);
+  min-width:22px;text-align:right;line-height:1}
+.team-score.win{color:var(--color-win)}
+.inn{font-family:var(--font-mono);font-size:var(--txs);color:var(--color-live);
+  min-width:36px;text-align:right;line-height:1.2}
+.inn.final{color:var(--color-text-faint)}
 
-.game-matchup { padding: var(--space-2) var(--space-3); display: flex; flex-direction: column; gap: var(--space-1); }
-.team-row { display: flex; align-items: center; gap: var(--space-2); }
-.team-abbr { font-family: var(--font-mono); font-weight: 700; font-size: var(--text-sm); width: 28px; flex-shrink: 0; letter-spacing: 0.02em; }
-.team-name-full { font-size: var(--text-xs); color: var(--color-text-muted); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.listen-row{padding:var(--sp2) var(--sp3)}
+.listen-btn{display:flex;align-items:center;justify-content:center;gap:var(--sp1);
+  width:100%;padding:var(--sp2) 0;
+  background:color-mix(in oklch,var(--color-radio) 15%,var(--color-surface-offset));
+  border:1px solid color-mix(in oklch,var(--color-radio) 40%,var(--color-border));
+  color:var(--color-radio);border-radius:var(--radius-md);
+  font-family:var(--font-mono);font-size:var(--tsm);font-weight:700;
+  text-transform:uppercase;letter-spacing:.04em;cursor:pointer}
+.listen-btn:active{background:color-mix(in oklch,var(--color-radio) 25%,var(--color-surface-offset))}
+.listen-btn.active{
+  background:color-mix(in oklch,var(--color-primary) 15%,var(--color-surface-offset));
+  border-color:color-mix(in oklch,var(--color-primary) 40%,var(--color-border));
+  color:var(--color-primary)}
 
-/* ─── LISTEN NOW BUTTON ─── */
-.listen-btn-row { padding: var(--space-2) var(--space-3); }
-.listen-btn {
-  display: flex; align-items: center; justify-content: center; gap: var(--space-1);
-  width: 100%; padding: var(--space-2) 0;
-  background: color-mix(in oklch, var(--color-radio) 15%, var(--color-surface-offset));
-  border: 1px solid color-mix(in oklch, var(--color-radio) 40%, var(--color-border));
-  color: var(--color-radio);
-  border-radius: var(--radius-md);
-  font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.04em;
-  cursor: pointer;
-}
-.listen-btn:active { background: color-mix(in oklch, var(--color-radio) 25%, var(--color-surface-offset)); }
-.listen-btn.active {
-  background: color-mix(in oklch, var(--color-primary) 15%, var(--color-surface-offset));
-  border-color: color-mix(in oklch, var(--color-primary) 40%, var(--color-border));
-  color: var(--color-primary);
-}
+.drawer{display:none;border-top:1px solid var(--color-divider);
+  background:var(--color-surface-2);padding:var(--sp1) var(--sp2) var(--sp2)}
+.drawer.open{display:block}
+.drawer-team{font-family:var(--font-mono);font-size:.5rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--color-primary);
+  padding:var(--sp1) var(--sp1) 2px;border-bottom:1px solid var(--color-divider);margin-bottom:2px}
+.stn-link{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--sp1) var(--sp1);border-radius:var(--radius-md);margin-bottom:1px;
+  cursor:pointer;transition:background var(--tr)}
+.stn-link:active,.stn-link:hover{background:var(--color-surface-dynamic)}
+.stn-call{font-family:var(--font-mono);font-size:var(--tsm);font-weight:600;color:var(--color-text)}
+.stn-loc{font-family:var(--font-mono);font-size:.5rem;color:var(--color-text-faint)}
+.stn-arr{font-size:var(--txs);color:var(--color-radio);margin-left:var(--sp1);flex-shrink:0}
 
-/* ─── STATIONS DRAWER ─── */
-.stations-drawer {
-  display: none;
-  border-top: 1px solid var(--color-divider);
-  background: var(--color-surface-2);
-  padding: var(--space-1) var(--space-2) var(--space-2);
-}
-.stations-drawer.open { display: block; }
-.station-team-label {
-  font-family: var(--font-mono); font-size: 0.5rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--color-primary);
-  padding: var(--space-1) var(--space-1) 2px;
-  border-bottom: 1px solid var(--color-divider);
-  margin-bottom: 2px;
-}
-.station-link {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--space-1) var(--space-1);
-  border-radius: var(--radius-md);
-  margin-bottom: 1px;
-  cursor: pointer;
-  transition: background var(--transition);
-}
-.station-link:active, .station-link:hover { background: var(--color-surface-dynamic); }
-.station-call { font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 600; color: var(--color-text); }
-.station-state { font-family: var(--font-mono); font-size: 0.5rem; color: var(--color-text-faint); }
-.station-arrow { font-size: var(--text-xs); color: var(--color-radio); margin-left: var(--space-1); flex-shrink: 0; }
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.skeleton{background:linear-gradient(90deg,var(--color-surface-offset) 25%,var(--color-surface-dynamic) 50%,var(--color-surface-offset) 75%);
+  background-size:200% 100%;animation:shimmer 1.4s ease-in-out infinite;border-radius:var(--radius-lg)}
+.skel-card{height:80px;margin-bottom:var(--sp2)}
 
-/* ─── SKELETON ─── */
-@keyframes shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position:  200% 0; }
-}
-.skeleton {
-  background: linear-gradient(90deg, var(--color-surface-offset) 25%, var(--color-surface-dynamic) 50%, var(--color-surface-offset) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s ease-in-out infinite;
-  border-radius: var(--radius-lg);
-}
-.skel-card { height: 80px; margin-bottom: var(--space-2); }
+.empty-state{display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:var(--sp6) var(--sp4);color:var(--color-text-muted);gap:var(--sp2)}
+.empty-icon{font-size:2rem;opacity:.4}
+.empty-title{font-weight:600;font-size:var(--tmd);color:var(--color-text)}
+.empty-sub{font-size:var(--tsm);color:var(--color-text-muted)}
+.retry-btn{margin-top:var(--sp2);padding:var(--sp1) var(--sp3);
+  background:var(--color-surface-offset);border-radius:var(--radius-md);
+  font-size:var(--txs);font-weight:600;min-height:28px}
+.retry-btn:active{background:var(--color-surface-dynamic)}
 
-/* ─── EMPTY / ERROR ─── */
-.empty-state {
-  display: flex; flex-direction: column; align-items: center;
-  text-align: center; padding: var(--space-6) var(--space-4);
-  color: var(--color-text-muted); gap: var(--space-2);
-}
-.empty-icon  { font-size: 2rem; opacity: 0.4; }
-.empty-title { font-weight: 600; font-size: var(--text-md); color: var(--color-text); }
-.empty-sub   { font-size: var(--text-sm); color: var(--color-text-muted); }
-.retry-btn {
-  margin-top: var(--space-2); padding: var(--space-1) var(--space-3);
-  background: var(--color-surface-offset); border-radius: var(--radius-md);
-  font-size: var(--text-xs); font-weight: 600; min-height: 28px;
-}
-.retry-btn:active { background: var(--color-surface-dynamic); }
+.app-footer{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--sp1) var(--sp3);background:var(--color-surface);
+  border-top:1px solid var(--color-divider);flex-shrink:0}
+.footer-text{font-size:var(--txs);color:var(--color-text-faint);font-family:var(--font-mono)}
+.cbar-wrap{flex:1;margin:0 var(--sp2);height:3px;background:var(--color-surface-offset);
+  border-radius:var(--radius-full);overflow:hidden}
+.cbar{height:100%;background:var(--color-primary);border-radius:var(--radius-full);transition:width 1s linear}
+.ref-st{font-size:var(--txs);font-family:var(--font-mono);color:var(--color-text-faint);min-width:28px;text-align:right}
 
-/* ─── FOOTER ─── */
-.app-footer {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--space-1) var(--space-3);
-  background: var(--color-surface); border-top: 1px solid var(--color-divider);
-  flex-shrink: 0;
-}
-.footer-text { font-size: var(--text-xs); color: var(--color-text-faint); font-family: var(--font-mono); }
-.countdown-bar-wrap { flex: 1; margin: 0 var(--space-2); height: 3px; background: var(--color-surface-offset); border-radius: var(--radius-full); overflow: hidden; }
-.countdown-bar { height: 100%; background: var(--color-primary); border-radius: var(--radius-full); transition: width 1s linear; }
-.refresh-status { font-size: var(--text-xs); font-family: var(--font-mono); color: var(--color-text-faint); min-width: 28px; text-align: right; }
-
-:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; border-radius: var(--radius-sm); }
-@media (prefers-reduced-motion: reduce) {
-  .live-dot { animation: none; }
-  .skeleton { animation: none; }
-  .countdown-bar { transition: none; }
-}
+:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;border-radius:var(--radius-sm)}
+@media(prefers-reduced-motion:reduce){.live-dot,.skeleton{animation:none}.cbar{transition:none}}
 </style>
 </head>
 <body>
 
 <header class="app-header">
   <div class="header-logo">
-    <svg aria-label="MLB R1 Radio" width="18" height="18" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="18" height="18" viewBox="0 0 26 26" fill="none">
       <circle cx="13" cy="13" r="12" stroke="#c8102e" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/>
-      <path d="M7 9.5 C9 8 11 8.5 13 10.5 C15 12.5 17 13 19 11.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-      <path d="M7 16.5 C9 15 11 15.5 13 17.5 C15 19.5 17 20 19 18.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M7 9.5C9 8 11 8.5 13 10.5C15 12.5 17 13 19 11.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M7 16.5C9 15 11 15.5 13 17.5C15 19.5 17 20 19 18.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
       <circle cx="13" cy="13" r="2.5" fill="#c8102e"/>
     </svg>
     <div class="header-title"><span>MLB</span> R1 Radio</div>
   </div>
   <div class="header-controls">
-    <div class="live-dot" id="liveDot"></div>
+    <div class="live-dot"></div>
     <button class="btn-icon" id="themeBtn" aria-label="Toggle theme">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
@@ -296,7 +179,7 @@ a { text-decoration: none; color: inherit; }
 
 <div class="status-bar">
   <span style="display:flex;flex-direction:column;align-items:flex-start">
-    <span class="version-watermark">v1.0.0</span>
+    <span class="vmwk">v2.0.0</span>
     <span class="status-date" id="statusDate">Loading…</span>
   </span>
   <span class="status-text" id="statusGames">—</span>
@@ -312,254 +195,238 @@ a { text-decoration: none; color: inherit; }
 </main>
 
 <footer class="app-footer">
-  <span class="footer-text">free-sportsradio.com</span>
-  <div class="countdown-bar-wrap"><div class="countdown-bar" id="countdownBar" style="width:100%"></div></div>
-  <span class="refresh-status" id="refreshStatus">–</span>
+  <span class="footer-text">MLB Stats API</span>
+  <div class="cbar-wrap"><div class="cbar" id="cbar" style="width:100%"></div></div>
+  <span class="ref-st" id="refSt">–</span>
 </footer>
 
 <script>
-const REFRESH_INTERVAL = 180;
-
-const ABBR = {
-  'Athletics':'ATH','Oakland Athletics':'ATH',
-  'Baltimore Orioles':'BAL','Boston Red Sox':'BOS',
-  'Chicago White Sox':'CWS','Cleveland Guardians':'CLE',
-  'Detroit Tigers':'DET','Houston Astros':'HOU',
-  'Kansas City Royals':'KCR','Los Angeles Angels':'LAA',
-  'Minnesota Twins':'MIN','New York Yankees':'NYY',
-  'Seattle Mariners':'SEA','Tampa Bay Rays':'TBR',
-  'Texas Rangers':'TEX','Toronto Blue Jays':'TOR',
-  'Arizona Diamondbacks':'ARI','Atlanta Braves':'ATL',
-  'Chicago Cubs':'CHC','Cincinnati Reds':'CIN',
-  'Colorado Rockies':'COL','Los Angeles Dodgers':'LAD',
-  'Miami Marlins':'MIA','Milwaukee Brewers':'MIL',
-  'New York Mets':'NYM','Philadelphia Phillies':'PHI',
-  'Pittsburgh Pirates':'PIT','San Diego Padres':'SDP',
-  'San Francisco Giants':'SFG','St. Louis Cardinals':'STL',
-  'Washington Nationals':'WSN'
+// ── Radio stations per MLB team (free-sportsradio.com flagship stations) ──
+const RADIO = {
+  109: [{call:'KTAR 620 AM',loc:'Phoenix, AZ',url:'https://www.iheart.com/live/ktar-news-620-am-7182/'},{call:'KEDG 103.7 FM',loc:'Phoenix, AZ',url:'https://www.iheart.com/live/103-7-the-edge-phoenix-5598/'}],
+  144: [{call:'WCNN 680 AM',loc:'Atlanta, GA',url:'https://680thefan.audacy.com/'},{call:'WNNX 100.5 FM',loc:'Atlanta, GA',url:'https://680thefan.audacy.com/'}],
+  110: [{call:'WBAL 1090 AM',loc:'Baltimore, MD',url:'https://www.wbal.com/'},{call:'98 Rock',loc:'Baltimore, MD',url:'https://www.audacy.com/98rock'}],
+  111: [{call:'WEEI 93.7 FM',loc:'Boston, MA',url:'https://www.weei.com/'},{call:'WRKO 680 AM',loc:'Boston, MA',url:'https://www.wrko.com/'}],
+  112: [{call:'670 The Score',loc:'Chicago, IL',url:'https://www.audacy.com/670thescore'},{call:'WSCR 670 AM',loc:'Chicago, IL',url:'https://www.audacy.com/670thescore'}],
+  113: [{call:'WLW 700 AM',loc:'Cincinnati, OH',url:'https://www.iheartradio.com/wlw'},{call:'ESPN 1530',loc:'Cincinnati, OH',url:'https://www.espn1530.com/'}],
+  114: [{call:'WTAM 1100 AM',loc:'Cleveland, OH',url:'https://www.wtam.com/'},{call:'WMMS 100.7 FM',loc:'Cleveland, OH',url:'https://www.wmms.com/'}],
+  115: [{call:'KBME 790 AM',loc:'Houston, TX',url:'https://sportsradio610.com/'},{call:'Sports Radio 610',loc:'Houston, TX',url:'https://sportsradio610.com/'}],
+  116: [{call:'WXYT 97.1 FM',loc:'Detroit, MI',url:'https://971theticket.com/'},{call:'971 The Ticket',loc:'Detroit, MI',url:'https://971theticket.com/'}],
+  118: [{call:'KCSP 610 AM',loc:'Kansas City, MO',url:'https://610sports.com/'},{call:'610 Sports Radio',loc:'Kansas City, MO',url:'https://610sports.com/'}],
+  108: [{call:'KLAA 830 AM',loc:'Los Angeles, CA',url:'https://www.espnlosangeles.com/'},{call:'ESPN 710',loc:'Los Angeles, CA',url:'https://www.espnlosangeles.com/'}],
+  140: [{call:'KTCK 1310 AM',loc:'Dallas, TX',url:'https://www.theticket.com/'},{call:'The Ticket 1310',loc:'Dallas, TX',url:'https://www.theticket.com/'}],
+  142: [{call:'TIBN 96.3 FM',loc:'Minneapolis, MN',url:'https://www.audacy.com/963espn'},{call:'ESPN 96.3 FM',loc:'Minneapolis, MN',url:'https://www.audacy.com/963espn'}],
+  147: [{call:'WFAN 660 AM',loc:'New York, NY',url:'https://www.wfan.com/'},{call:'WCBS 880 AM',loc:'New York, NY',url:'https://www.radio.com/wcbs880'}],
+  133: [{call:'KHTK 1140 AM',loc:'Sacramento, CA',url:'https://www.audacy.com/sportsradio1140'},{call:'Sports Radio 1140',loc:'Sacramento, CA',url:'https://www.audacy.com/sportsradio1140'}],
+  146: [{call:'WINZ 940 AM',loc:'Miami, FL',url:'https://www.940winz.com/'},{call:'940 WINZ',loc:'Miami, FL',url:'https://www.940winz.com/'}],
+  158: [{call:'WTMJ 620 AM',loc:'Milwaukee, WI',url:'https://www.620wtmj.com/'},{call:'620 WTMJ',loc:'Milwaukee, WI',url:'https://www.620wtmj.com/'}],
+  121: [{call:'WFAN 101.9 FM',loc:'New York, NY',url:'https://www.wfan.com/'},{call:'SNY Radio',loc:'New York, NY',url:'https://www.wfan.com/'}],
+  143: [{call:'94 WIP 94.1 FM',loc:'Philadelphia, PA',url:'https://94wip.audacy.com/'},{call:'94 WIP AM 610',loc:'Philadelphia, PA',url:'https://94wip.audacy.com/'}],
+  134: [{call:'93.7 The Fan',loc:'Pittsburgh, PA',url:'https://937thefan.audacy.com/'},{call:'KDKA 1020 AM',loc:'Pittsburgh, PA',url:'https://www.audacy.com/kdka'}],
+  135: [{call:'KFMB 760 AM',loc:'San Diego, CA',url:'https://www.760kfmb.com/'},{call:'760 KFMB',loc:'San Diego, CA',url:'https://www.760kfmb.com/'}],
+  137: [{call:'KNBR 680 AM',loc:'San Francisco, CA',url:'https://www.knbr.com/'},{call:'KNBR 104.5 FM',loc:'San Francisco, CA',url:'https://www.knbr.com/'}],
+  136: [{call:'KCBS 740 AM',loc:'Seattle, WA',url:'https://www.710espn.com/'},{call:'710 ESPN Seattle',loc:'Seattle, WA',url:'https://www.710espn.com/'}],
+  138: [{call:'KMOX 1120 AM',loc:'St. Louis, MO',url:'https://www.kmox.com/'},{call:'KMOX 1120',loc:'St. Louis, MO',url:'https://www.kmox.com/'}],
+  139: [{call:'WDAE 95.3 FM',loc:'Tampa, FL',url:'https://www.audacy.com/wdae'},{call:'WDAE 620 AM',loc:'Tampa, FL',url:'https://www.audacy.com/wdae'}],
+  141: [{call:'Sportsnet 590',loc:'Toronto, ON',url:'https://www.sportsnet.ca/590/'},{call:'Fan 590 AM',loc:'Toronto, ON',url:'https://www.sportsnet.ca/590/'}],
+  120: [{call:'106.7 The Fan',loc:'Washington, DC',url:'https://www.1067thefan.com/'},{call:'WJFK 106.7 FM',loc:'Washington, DC',url:'https://www.1067thefan.com/'}],
+  117: [{call:'KCFH 105.7 FM',loc:'Denver, CO',url:'https://www.audacy.com/kckx'},{call:'KOA 850 AM',loc:'Denver, CO',url:'https://www.koacomm.com/'}],
+  119: [{call:'AM 570 LA Sports',loc:'Los Angeles, CA',url:'https://www.am570lasports.com/'},{call:'AM 570',loc:'Los Angeles, CA',url:'https://www.am570lasports.com/'}],
+  145: [{call:'670 The Score',loc:'Chicago, IL',url:'https://www.audacy.com/670thescore'},{call:'WSCR 670 AM',loc:'Chicago, IL',url:'https://www.audacy.com/670thescore'}],
+  // Athletics (Oakland/Sacramento)
+  133: [{call:'KHTK 1140 AM',loc:'Sacramento, CA',url:'https://www.audacy.com/sportsradio1140'}],
+  // Arizona
+  109: [{call:'KTAR 620 AM',loc:'Phoenix, AZ',url:'https://ktar.com/'}],
 };
-function abbr(name) { return ABBR[name] || (name||'').substring(0,3).toUpperCase(); }
 
-let state = {
-  games: [],
-  focusIndex: 0,
-  theme: 'dark',
-  countdown: REFRESH_INTERVAL,
-  countdownTimer: null
+// Fallback for any team not in map
+function getStations(teamId, teamName) {
+  const s = RADIO[teamId];
+  if (s && s.length) return s;
+  // Generic fallback
+  const slug = teamName.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+  return [{call:'Free Sports Radio',loc:'',url:`https://www.free-sportsradio.com/teams/${slug}`}];
+}
+
+const ABBR={
+  'Athletics':'ATH','Oakland Athletics':'ATH','Sacramento Athletics':'ATH',
+  'Baltimore Orioles':'BAL','Boston Red Sox':'BOS','Chicago White Sox':'CWS',
+  'Cleveland Guardians':'CLE','Detroit Tigers':'DET','Houston Astros':'HOU',
+  'Kansas City Royals':'KCR','Los Angeles Angels':'LAA','Minnesota Twins':'MIN',
+  'New York Yankees':'NYY','Seattle Mariners':'SEA','Tampa Bay Rays':'TBR',
+  'Texas Rangers':'TEX','Toronto Blue Jays':'TOR','Arizona Diamondbacks':'ARI',
+  'Atlanta Braves':'ATL','Chicago Cubs':'CHC','Cincinnati Reds':'CIN',
+  'Colorado Rockies':'COL','Los Angeles Dodgers':'LAD','Miami Marlins':'MIA',
+  'Milwaukee Brewers':'MIL','New York Mets':'NYM','Philadelphia Phillies':'PHI',
+  'Pittsburgh Pirates':'PIT','San Diego Padres':'SDP','San Francisco Giants':'SFG',
+  'St. Louis Cardinals':'STL','Washington Nationals':'WSN'
 };
+function abbr(n){return ABBR[n]||(n||'').substring(0,3).toUpperCase()}
+function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function fmtTime(iso){if(!iso)return '';return new Date(iso).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true})}
+function ordinal(n){const s=['th','st','nd','rd'],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0])}
 
-// R1 scroll wheel hardware integration
-window.addEventListener('keydown', function(e) {
-  if (e.key === 'ArrowUp' || e.key === 'AudioVolumeUp') {
-    setFocus(state.focusIndex - 1); e.preventDefault();
-  } else if (e.key === 'ArrowDown' || e.key === 'AudioVolumeDown') {
-    setFocus(state.focusIndex + 1); e.preventDefault();
-  } else if (e.key === 'Enter' || e.key === ' ') {
-    const cards = getCards();
-    if (cards[state.focusIndex]) toggleCard(cards[state.focusIndex]);
-    e.preventDefault();
-  }
+const REFRESH=30;
+let st={games:[],focusIndex:0,theme:'dark',countdown:REFRESH,timer:null};
+
+// R1 scroll wheel
+window.addEventListener('keydown',e=>{
+  if(e.key==='ArrowUp'||e.key==='AudioVolumeUp'){setFocus(st.focusIndex-1);e.preventDefault()}
+  else if(e.key==='ArrowDown'||e.key==='AudioVolumeDown'){setFocus(st.focusIndex+1);e.preventDefault()}
+  else if(e.key==='Enter'||e.key===' '){const c=getCards();if(c[st.focusIndex])toggleCard(c[st.focusIndex]);e.preventDefault()}
 });
 
-function getCards() { return Array.from(document.querySelectorAll('.game-card')); }
-
-function setFocus(idx) {
-  const cards = getCards();
-  if (!cards.length) return;
-  idx = Math.max(0, Math.min(idx, cards.length - 1));
-  state.focusIndex = idx;
-  cards.forEach((c, i) => c.classList.toggle('focused', i === idx));
-  cards[idx].scrollIntoView({ block: 'nearest', behavior: 'auto' });
+function getCards(){return Array.from(document.querySelectorAll('.game-card'))}
+function setFocus(idx){
+  const cards=getCards();if(!cards.length)return;
+  idx=Math.max(0,Math.min(idx,cards.length-1));st.focusIndex=idx;
+  cards.forEach((c,i)=>c.classList.toggle('focused',i===idx));
+  cards[idx].scrollIntoView({block:'nearest',behavior:'auto'});
 }
-
-function toggleCard(card) {
-  const drawer = card.querySelector('.stations-drawer');
-  const btn    = card.querySelector('.listen-btn');
-  const isOpen = drawer.classList.contains('open');
-  document.querySelectorAll('.stations-drawer.open').forEach(d => d.classList.remove('open'));
-  document.querySelectorAll('.listen-btn.active').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.game-card.open').forEach(c => c.classList.remove('open'));
-  if (!isOpen) {
-    drawer.classList.add('open');
-    btn.classList.add('active');
-    card.classList.add('open');
-    btn.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg> Hide Stations`;
-  } else {
-    btn.innerHTML = listenBtnHTML();
-  }
+function toggleCard(card){
+  const drw=card.querySelector('.drawer'),btn=card.querySelector('.listen-btn');
+  const open=drw.classList.contains('open');
+  document.querySelectorAll('.drawer.open').forEach(d=>d.classList.remove('open'));
+  document.querySelectorAll('.listen-btn.active').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.game-card.open').forEach(c=>c.classList.remove('open'));
+  if(!open){drw.classList.add('open');btn.classList.add('active');card.classList.add('open');
+    btn.innerHTML=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg> Hide`;}
+  else{btn.innerHTML=listenHTML();}
 }
+function listenHTML(){return `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1"/><path d="M19 12a7 7 0 1 1-14 0 7 7 0 0 1 14 0"/><path d="M12 5v1M12 18v1M5 12H4M20 12h-1"/></svg> 📻 Listen`}
 
-function listenBtnHTML() {
-  return `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1"/><path d="M19 12a7 7 0 1 1-14 0 7 7 0 0 1 14 0"/><path d="M12 5v1M12 18v1M5 12H4M20 12h-1"/></svg> 📻 Listen Now`;
-}
-
-async function loadGames() {
-  document.getElementById('refreshBtn').style.opacity = '0.4';
-  const d = new Date();
-  document.getElementById('statusDate').textContent =
-    d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
-
-  try {
-    const targetUrl = 'https://www.free-sportsradio.com/scores/mlb';
-    const proxyUrl  = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
-    const res  = await fetch(proxyUrl);
-    const data = await res.json();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(data.contents, 'text/html');
-    const rawText = doc.body ? (doc.body.innerText || doc.body.textContent || '') : '';
-    const lines = rawText.split('\n').map(l => l.trim()).filter(l => l);
-
-    const games = [];
-    let i = 0;
-    while (i < lines.length) {
-      if (lines[i] !== 'Listen Now') { i++; continue; }
-      let awayTeam = '', homeTeam = '', gameStatus = '';
-      for (let j = i - 1; j >= Math.max(0, i - 25); j--) {
-        const l = lines[j];
-        if (!gameStatus && l.match(/^(Final|Top\s+\d+|Bot(?:tom)?\s+\d+|Mid(?:dle)?\s+\d+|End\s+\d+|Pre-Game|Warmup|Delayed|Postponed)/i)) gameStatus = l;
-        if (l.match(/^[A-Z][a-zA-Z\-]+(?:\s[A-Z][a-zA-Z]+)?$/) && !l.match(/\d/) && l.length < 22 &&
-            !['Final','Top','Bottom','Middle','End','Pre','Warmup','Delayed','Postponed','Game','Listen','Now','Scores','Radio','Broadcast','TV'].includes(l)) {
-          if (!homeTeam) homeTeam = l;
-          else if (!awayTeam) awayTeam = l;
-        }
-        if (awayTeam && homeTeam) break;
-      }
-      const stationData = {};
-      let currentTeam = null;
-      let j = i + 1;
-      while (j < lines.length && j < i + 50) {
-        const l = lines[j];
-        if (l === 'Listen Now') break;
-        if (l.match(/^(Scores|Schedule|Standings|Teams|MLB\s)/i)) break;
-        if (l.match(/^[A-Z][a-zA-Z\-]+(?:\s[A-Z][a-zA-Z]+)?$/) && !l.match(/\d/) && l.length < 22) {
-          currentTeam = l;
-          if (!stationData[currentTeam]) stationData[currentTeam] = [];
-        } else if (currentTeam && l.match(/^[A-Z0-9]{2,6}\s+[\d.]+\s*(AM|FM)/i)) {
-          const nextLine = lines[j + 1] || '';
-          let state_ = '';
-          if (nextLine.match(/^[A-Z][a-zA-Z\s]+$/) && nextLine.length < 20 && !nextLine.match(/\d/)) {
-            state_ = nextLine; j++;
-          }
-          stationData[currentTeam].push({ call: l, state: state_ });
-        }
-        j++;
-      }
-      games.push({ awayTeam: awayTeam || 'Away', homeTeam: homeTeam || 'Home', gameStatus, stationData });
-      i = j;
-    }
-
+async function loadGames(){
+  document.getElementById('refreshBtn').style.opacity='0.4';
+  const d=new Date();
+  document.getElementById('statusDate').textContent=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  try{
+    const r=await fetch(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${today()}&hydrate=linescore,flags`);
+    if(!r.ok)throw new Error('API error');
+    const data=await r.json();
+    const games=(data.dates||[])[0]?.games||[];
+    st.games=games;
     renderGames(games);
-    const live = games.filter(g => g.gameStatus.match(/Top|Bot|Mid|End/i)).length;
-    document.getElementById('statusGames').textContent = `${games.length} game${games.length !== 1 ? 's' : ''}${live > 0 ? ` · ${live} LIVE` : ''}`;
-  } catch (err) {
-    document.getElementById('gamesList').innerHTML = `
+    const live=games.filter(g=>g.status?.abstractGameCode==='L').length;
+    document.getElementById('statusGames').textContent=`${games.length} game${games.length!==1?'s':''}${live>0?` · ${live} LIVE`:''}`;
+  }catch(err){
+    document.getElementById('gamesList').innerHTML=`
       <div class="empty-state">
         <div class="empty-icon">📡</div>
         <div class="empty-title">Could not load</div>
-        <div class="empty-sub">${err.message || 'Check Wi-Fi connection'}</div>
+        <div class="empty-sub">${err.message||'Check Wi-Fi'}</div>
         <button class="retry-btn" onclick="loadGames()">Retry</button>
       </div>`;
   }
-  document.getElementById('refreshBtn').style.opacity = '1';
+  document.getElementById('refreshBtn').style.opacity='1';
   resetCountdown();
 }
 
-function statusCls(gs) {
-  if (!gs) return 'sched';
-  if (gs.match(/Final|Postponed|Delayed/i)) return 'final';
-  if (gs.match(/Top|Bot|Mid|End/i)) return 'live';
-  return 'sched';
+function statusCls(g){const c=g.status?.abstractGameCode;return c==='L'?'live':c==='F'?'final':'sched'}
+function statusLabel(g){
+  const s=g.status,c=s?.abstractGameCode;
+  if(c==='L'){const ls=g.linescore;if(!ls)return 'LIVE';return `${ls.isTopInning?'▲':'▼'}${ls.currentInning||''}`}
+  if(c==='F')return 'FINAL';
+  return fmtTime(g.gameDate)||'SCHED';
 }
 
-function renderGames(games) {
-  const list = document.getElementById('gamesList');
-  if (!games.length) {
-    list.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">⚾</div>
-        <div class="empty-title">No games today</div>
-        <div class="empty-sub">No broadcasts found. Check back on a game day!</div>
-      </div>`;
+function renderGames(games){
+  const list=document.getElementById('gamesList');
+  if(!games.length){
+    list.innerHTML=`<div class="empty-state"><div class="empty-icon">⚾</div><div class="empty-title">No games today</div><div class="empty-sub">Check back on a game day!</div></div>`;
     return;
   }
-  list.innerHTML = games.map((game, idx) => {
-    const sc = statusCls(game.gameStatus);
-    const sl = game.gameStatus || (sc === 'sched' ? 'SCHED' : sc.toUpperCase());
-    let stationsHTML = '';
-    const teamKeys = Object.keys(game.stationData);
-    if (teamKeys.length > 0) {
-      teamKeys.forEach(team => {
-        const stations = game.stationData[team];
-        if (!stations || !stations.length) return;
-        stationsHTML += `<div class="station-team-label">${team}</div>`;
-        stations.forEach(s => {
-          const slug = s.call.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '').toLowerCase();
-          const url = `https://www.free-sportsradio.com/listen/${slug}`;
-          stationsHTML += `
-            <a href="${url}" target="_blank" class="station-link">
-              <span class="station-call">${s.call}</span>
-              <span style="display:flex;align-items:center;gap:2px">
-                <span class="station-state">${s.state}</span>
-                <span class="station-arrow">▶</span>
-              </span>
-            </a>`;
-        });
-      });
-    } else {
-      stationsHTML = `<a href="https://www.free-sportsradio.com/scores/mlb" target="_blank" class="station-link">
-        <span class="station-call">Open Broadcast Page</span>
-        <span class="station-arrow">▶</span>
-      </a>`;
+  const order={L:0,P:1,F:2};
+  const sorted=[...games].sort((a,b)=>(order[a.status?.abstractGameCode]??1)-(order[b.status?.abstractGameCode]??1));
+
+  list.innerHTML=sorted.map((g,idx)=>{
+    const away=g.teams?.away,home=g.teams?.home;
+    const sc=statusCls(g),sl=statusLabel(g);
+    const ls=g.linescore;
+    const isLive=g.status?.abstractGameCode==='L';
+    const isFinal=g.status?.abstractGameCode==='F';
+    const awaySc=away?.score??(isLive||isFinal?0:'');
+    const homeSc=home?.score??(isLive||isFinal?0:'');
+    const awayWin=(isFinal||isLive)&&(away?.score||0)>(home?.score||0);
+    const homeWin=(isFinal||isLive)&&(home?.score||0)>(away?.score||0);
+    let innHTML='';
+    if(isLive&&ls)innHTML=`${ls.isTopInning?'▲':'▼'} ${ordinal(ls.currentInning||1)}<br><span style="font-size:.55rem;opacity:.7">${ls.outs??0} out${(ls.outs??0)!==1?'s':''}</span>`;
+    else if(isFinal)innHTML='F';
+    else innHTML=fmtTime(g.gameDate)||'—';
+
+    // Build stations drawer
+    const awayId=away?.team?.id,homeId=home?.team?.id;
+    const awayName=away?.team?.name||'Away',homeName=home?.team?.name||'Home';
+    const awayStn=getStations(awayId,awayName);
+    const homeStn=getStations(homeId,homeName);
+
+    function stnHTML(name,stations){
+      return `<div class="drawer-team">${name}</div>`+
+        stations.map(s=>`<a href="${s.url}" target="_blank" class="stn-link">
+          <span class="stn-call">${s.call}</span>
+          <span style="display:flex;align-items:center;gap:2px">
+            <span class="stn-loc">${s.loc}</span>
+            <span class="stn-arr">▶</span>
+          </span></a>`).join('');
     }
-    return `
-      <div class="game-card" data-idx="${idx}">
-        <div class="game-card-header">
-          <span class="game-status-badge badge-${sc}">${sl}</span>
-          <span class="game-venue">free-sportsradio.com</span>
+
+    return `<div class="game-card" data-idx="${idx}">
+      <div class="game-card-header">
+        <span class="badge badge-${sc}">${sl}</span>
+        <span class="game-venue">${g.venue?.name||''}</span>
+      </div>
+      <div class="game-matchup">
+        <div class="team-row">
+          <span class="team-abbr">${abbr(awayName)}</span>
+          <span class="team-name">${awayName}</span>
+          <span class="team-score${awayWin?' win':''}">${awaySc}</span>
+          <span style="min-width:36px"></span>
         </div>
-        <div class="game-matchup">
-          <div class="team-row">
-            <span class="team-abbr">${abbr(game.awayTeam)}</span>
-            <span class="team-name-full">${game.awayTeam}</span>
-          </div>
-          <div class="team-row">
-            <span class="team-abbr">${abbr(game.homeTeam)}</span>
-            <span class="team-name-full">${game.homeTeam}</span>
-          </div>
+        <div class="team-row">
+          <span class="team-abbr">${abbr(homeName)}</span>
+          <span class="team-name">${homeName}</span>
+          <span class="team-score${homeWin?' win':''}">${homeSc}</span>
+          <div class="inn${isFinal?' final':''}" style="min-width:36px;text-align:right">${innHTML}</div>
         </div>
-        <div class="listen-btn-row">
-          <button class="listen-btn">${listenBtnHTML()}</button>
+      </div>
+      <div class="listen-row">
+        <button class="listen-btn">${listenHTML()}</button>
+      </div>
+      <div class="drawer">
+        ${stnHTML(awayName,awayStn)}
+        ${stnHTML(homeName,homeStn)}
+        <div style="margin-top:4px">
+          <a href="https://www.free-sportsradio.com/scores/mlb" target="_blank" class="stn-link" style="opacity:.6">
+            <span class="stn-call">More stations…</span>
+            <span class="stn-arr">▶</span>
+          </a>
         </div>
-        <div class="stations-drawer">${stationsHTML}</div>
-      </div>`;
+      </div>
+    </div>`;
   }).join('');
 
-  document.querySelectorAll('.game-card').forEach(card => {
-    card.querySelector('.listen-btn')?.addEventListener('click', () => toggleCard(card));
+  document.querySelectorAll('.game-card').forEach(card=>{
+    card.querySelector('.listen-btn')?.addEventListener('click',()=>toggleCard(card));
   });
-  setFocus(Math.min(state.focusIndex, games.length - 1));
+  setFocus(Math.min(st.focusIndex,sorted.length-1));
 }
 
-function resetCountdown() {
-  state.countdown = REFRESH_INTERVAL;
-  clearInterval(state.countdownTimer);
-  state.countdownTimer = setInterval(() => {
-    state.countdown--;
-    document.getElementById('countdownBar').style.width = (state.countdown / REFRESH_INTERVAL * 100) + '%';
-    document.getElementById('refreshStatus').textContent = state.countdown > 60
-      ? Math.ceil(state.countdown / 60) + 'm' : state.countdown + 's';
-    if (state.countdown <= 0) { clearInterval(state.countdownTimer); loadGames(); }
-  }, 1000);
+function resetCountdown(){
+  st.countdown=REFRESH;clearInterval(st.timer);
+  st.timer=setInterval(()=>{
+    st.countdown--;
+    document.getElementById('cbar').style.width=(st.countdown/REFRESH*100)+'%';
+    document.getElementById('refSt').textContent=st.countdown+'s';
+    if(st.countdown<=0){clearInterval(st.timer);loadGames();}
+  },1000);
 }
 
-document.getElementById('refreshBtn').addEventListener('click', loadGames);
-
-document.getElementById('themeBtn').addEventListener('click', () => {
-  state.theme = state.theme === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', state.theme);
-  document.getElementById('themeBtn').innerHTML = state.theme === 'dark'
-    ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
-    : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+document.getElementById('refreshBtn').addEventListener('click',loadGames);
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  st.theme=st.theme==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',st.theme);
+  document.getElementById('themeBtn').innerHTML=st.theme==='dark'
+    ?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+    :'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
 });
 
 loadGames();
