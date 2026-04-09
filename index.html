@@ -9,246 +9,278 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root,[data-theme="dark"]{
-  --color-bg:#0d0f0e;--color-surface:#131615;--color-surface-2:#191c1a;
-  --color-surface-offset:#1f2320;--color-surface-dynamic:#252928;
-  --color-divider:#2a2e2c;--color-border:#333836;
-  --color-text:#e8ebe9;--color-text-muted:#7a8078;--color-text-faint:#4a4f4d;
-  --color-primary:#c8102e;--color-win:#22c55e;--color-loss:#ef4444;
-  --color-live:#f59e0b;--color-final:#7a8078;--color-sched:#5591c7;
-  --color-radio:#3b82f6;
-  --radius-sm:.25rem;--radius-md:.375rem;--radius-lg:.5rem;--radius-full:9999px;
-  --sp1:.25rem;--sp2:.5rem;--sp3:.75rem;--sp4:1rem;--sp6:1.5rem;
-  --font-body:'Inter',system-ui,sans-serif;
-  --font-mono:'JetBrains Mono','Fira Code',monospace;
-  --txs:.5625rem;--tsm:.625rem;--tbase:.6875rem;--tmd:.8125rem;--tlg:.9375rem;
+  --bg:#0d0f0e;--sur:#131615;--sur2:#191c1a;--surO:#1f2320;--surD:#252928;
+  --div:#2a2e2c;--bor:#333836;
+  --tx:#e8ebe9;--txM:#7a8078;--txF:#4a4f4d;
+  --red:#c8102e;--win:#22c55e;--loss:#ef4444;
+  --live:#f59e0b;--fin:#7a8078;--sch:#5591c7;--radio:#3b82f6;
+  --r:.375rem;--rf:9999px;
+  --s1:.25rem;--s2:.5rem;--s3:.75rem;--s4:1rem;--s6:1.5rem;
+  --fb:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',monospace;
+  --txs:.5625rem;--tsm:.625rem;--tb:.6875rem;--tmd:.8125rem;
   --tr:160ms cubic-bezier(.16,1,.3,1);
 }
 [data-theme="light"]{
-  --color-bg:#f4f5f4;--color-surface:#fff;--color-surface-2:#f9faf9;
-  --color-surface-offset:#eef0ee;--color-surface-dynamic:#e5e8e5;
-  --color-divider:#dce0dc;--color-border:#d0d4d0;
-  --color-text:#111412;--color-text-muted:#5a625a;--color-text-faint:#9aa09a;
+  --bg:#f4f5f4;--sur:#fff;--sur2:#f9faf9;--surO:#eef0ee;--surD:#e5e8e5;
+  --div:#dce0dc;--bor:#d0d4d0;--tx:#111412;--txM:#5a625a;--txF:#9aa09a;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:none;text-size-adjust:none;-webkit-font-smoothing:antialiased;height:100%}
-body{font-family:var(--font-body);font-size:var(--tbase);color:var(--color-text);
-  background:var(--color-bg);height:100dvh;overflow:hidden;display:flex;
-  flex-direction:column;max-width:240px;margin:0 auto}
+body{font-family:var(--fb);font-size:var(--tb);color:var(--tx);background:var(--bg);
+  height:100dvh;overflow:hidden;display:flex;flex-direction:column;max-width:240px;margin:0 auto}
 button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 a,button{transition:color var(--tr),background var(--tr),opacity var(--tr)}
 a{text-decoration:none;color:inherit}
 
-.app-header{display:flex;align-items:center;justify-content:space-between;
-  padding:var(--sp2) var(--sp3);background:var(--color-surface);
-  border-bottom:1px solid var(--color-divider);flex-shrink:0;gap:var(--sp2)}
-.header-logo{display:flex;align-items:center;gap:var(--sp2)}
-.header-title{font-size:var(--tsm);font-weight:700;letter-spacing:-.01em;line-height:1}
-.header-title span{color:var(--color-primary)}
-.header-controls{display:flex;align-items:center;gap:var(--sp2)}
-.live-dot{width:7px;height:7px;border-radius:var(--radius-full);
-  background:var(--color-radio);animation:pulse 1.8s ease-in-out infinite}
+/* HEADER */
+.hdr{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--s2) var(--s3);background:var(--sur);border-bottom:1px solid var(--div);flex-shrink:0;gap:var(--s2)}
+.hlogo{display:flex;align-items:center;gap:var(--s2)}
+.htitle{font-size:var(--tsm);font-weight:700;letter-spacing:-.01em;line-height:1}
+.htitle span{color:var(--red)}
+.hctrl{display:flex;align-items:center;gap:var(--s2)}
+.ldot{width:7px;height:7px;border-radius:var(--rf);background:var(--radio);animation:pulse 1.8s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
-.btn-icon{min-width:32px;min-height:32px;width:32px;height:32px;
-  border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;
-  color:var(--color-text-muted);background:var(--color-surface-offset)}
-.btn-icon:active{background:var(--color-surface-dynamic);color:var(--color-text)}
+.bico{min-width:28px;min-height:28px;width:28px;height:28px;border-radius:var(--r);
+  display:flex;align-items:center;justify-content:center;color:var(--txM);background:var(--surO)}
+.bico:active{background:var(--surD);color:var(--tx)}
 
-.status-bar{display:flex;align-items:center;justify-content:space-between;
-  padding:var(--sp1) var(--sp3);
-  background:color-mix(in oklch,var(--color-primary) 8%,var(--color-surface));
-  border-bottom:1px solid var(--color-divider);flex-shrink:0}
-.status-text{font-size:var(--txs);color:var(--color-text-muted);font-family:var(--font-mono)}
-.status-date{font-size:var(--txs);font-weight:600;color:var(--color-text);font-family:var(--font-mono)}
-.vmwk{font-size:.4375rem;font-family:var(--font-mono);color:var(--color-text-faint);opacity:.45;line-height:1}
+/* DATE TABS */
+.tabs{display:flex;background:var(--sur2);border-bottom:1px solid var(--div);flex-shrink:0}
+.tab{flex:1;padding:var(--s2) 0;font-family:var(--fm);font-size:var(--txs);font-weight:700;
+  text-align:center;text-transform:uppercase;letter-spacing:.04em;color:var(--txM);
+  border-bottom:2px solid transparent;transition:color var(--tr),border-color var(--tr)}
+.tab.active{color:var(--red);border-bottom-color:var(--red)}
+.tab:active{background:var(--surD)}
 
-.main-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;
-  scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
-  scrollbar-width:thin;scrollbar-color:var(--color-border) transparent}
-.main-scroll::-webkit-scrollbar{width:3px}
-.main-scroll::-webkit-scrollbar-thumb{background:var(--color-border);border-radius:var(--radius-full)}
+/* STATUS BAR */
+.sbar{display:flex;align-items:center;justify-content:space-between;padding:var(--s1) var(--s3);
+  background:color-mix(in oklch,var(--red) 8%,var(--sur));border-bottom:1px solid var(--div);flex-shrink:0}
+.sdate{font-size:var(--txs);font-weight:600;color:var(--tx);font-family:var(--fm)}
+.sgames{font-size:var(--txs);color:var(--txM);font-family:var(--fm)}
+.vmwk{font-size:.4375rem;font-family:var(--fm);color:var(--txF);opacity:.45;line-height:1}
 
-.games-list{padding:var(--sp2);display:flex;flex-direction:column;gap:var(--sp2)}
-.game-card{background:var(--color-surface);border:1px solid var(--color-border);
-  border-radius:var(--radius-lg);overflow:hidden;
+/* SCROLL */
+.scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--bor) transparent}
+.scroll::-webkit-scrollbar{width:3px}
+.scroll::-webkit-scrollbar-thumb{background:var(--bor);border-radius:var(--rf)}
+
+/* GAME CARDS */
+.glist{padding:var(--s2);display:flex;flex-direction:column;gap:var(--s2)}
+.gc{background:var(--sur);border:1px solid var(--bor);border-radius:.5rem;overflow:hidden;
   transition:box-shadow var(--tr),transform var(--tr)}
-.game-card:active{transform:scale(.985)}
-.game-card.focused{border-color:var(--color-radio);box-shadow:0 0 0 1.5px var(--color-radio)}
-.game-card.open{border-color:var(--color-primary);box-shadow:0 0 0 1px var(--color-primary)}
-
-.game-card-header{display:flex;align-items:center;justify-content:space-between;
-  padding:var(--sp2) var(--sp3);border-bottom:1px solid var(--color-divider);
-  background:var(--color-surface-2)}
+.gc:active{transform:scale(.985)}
+.gc.focused{border-color:var(--radio);box-shadow:0 0 0 1.5px var(--radio)}
+.gc.open{border-color:var(--red);box-shadow:0 0 0 1px var(--red)}
+.gch{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--s2) var(--s3);border-bottom:1px solid var(--div);background:var(--sur2)}
 .badge{font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
-  padding:1px 4px;border-radius:var(--radius-full);font-family:var(--font-mono)}
-.badge-live{background:color-mix(in oklch,var(--color-live) 18%,transparent);color:var(--color-live)}
-.badge-final{background:color-mix(in oklch,var(--color-final) 18%,transparent);color:var(--color-final)}
-.badge-sched{background:color-mix(in oklch,var(--color-sched) 18%,transparent);color:var(--color-sched)}
-.game-venue{font-size:.5rem;color:var(--color-text-faint);font-family:var(--font-mono)}
+  padding:1px 4px;border-radius:var(--rf);font-family:var(--fm)}
+.bl{background:color-mix(in oklch,var(--live) 18%,transparent);color:var(--live)}
+.bf{background:color-mix(in oklch,var(--fin) 18%,transparent);color:var(--fin)}
+.bs{background:color-mix(in oklch,var(--sch) 18%,transparent);color:var(--sch)}
+.gvenue{font-size:.5rem;color:var(--txF);font-family:var(--fm)}
+.gmatch{padding:var(--s2) var(--s3);display:flex;flex-direction:column;gap:var(--s1)}
+.trow{display:flex;align-items:center;gap:var(--s2)}
+.tabb{font-family:var(--fm);font-weight:700;font-size:var(--tsm);width:28px;flex-shrink:0;letter-spacing:.02em}
+.tname{font-size:var(--txs);color:var(--txM);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tscore{font-family:var(--fm);font-weight:700;font-size:var(--tmd);min-width:22px;text-align:right;line-height:1}
+.tscore.win{color:var(--win)}
+.inn{font-family:var(--fm);font-size:var(--txs);color:var(--live);min-width:38px;text-align:right;line-height:1.2}
+.inn.fin{color:var(--txF)}
 
-.game-matchup{padding:var(--sp2) var(--sp3);display:flex;flex-direction:column;gap:var(--sp1)}
-.team-row{display:flex;align-items:center;gap:var(--sp2)}
-.team-abbr{font-family:var(--font-mono);font-weight:700;font-size:var(--tsm);
-  width:28px;flex-shrink:0;letter-spacing:.02em}
-.team-name{font-size:var(--txs);color:var(--color-text-muted);flex:1;
+/* LISTEN BTN */
+.lrow{padding:var(--s2) var(--s3)}
+.lbtn{display:flex;align-items:center;justify-content:center;gap:var(--s1);
+  width:100%;padding:var(--s2) 0;
+  background:color-mix(in oklch,var(--radio) 15%,var(--surO));
+  border:1px solid color-mix(in oklch,var(--radio) 40%,var(--bor));
+  color:var(--radio);border-radius:var(--r);
+  font-family:var(--fm);font-size:var(--tsm);font-weight:700;
+  text-transform:uppercase;letter-spacing:.04em}
+.lbtn:active{background:color-mix(in oklch,var(--radio) 25%,var(--surO))}
+.lbtn.active{background:color-mix(in oklch,var(--red) 15%,var(--surO));
+  border-color:color-mix(in oklch,var(--red) 40%,var(--bor));color:var(--red)}
+
+/* STATIONS DRAWER */
+.drw{display:none;border-top:1px solid var(--div);background:var(--sur2);padding:var(--s1) var(--s2) var(--s2)}
+.drw.open{display:block}
+.drw-team{font-family:var(--fm);font-size:.5rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--red);padding:var(--s1) var(--s1) 2px;
+  border-bottom:1px solid var(--div);margin-bottom:2px}
+.stn{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--s1) var(--s1);border-radius:var(--r);margin-bottom:1px;cursor:pointer;
+  transition:background var(--tr)}
+.stn:active,.stn:hover{background:var(--surD)}
+.stn.playing{background:color-mix(in oklch,var(--radio) 18%,var(--surO));
+  border-left:2px solid var(--radio)}
+.scall{font-family:var(--fm);font-size:var(--tsm);font-weight:600;color:var(--tx)}
+.sloc{font-family:var(--fm);font-size:.5rem;color:var(--txF)}
+.sarr{font-size:var(--txs);color:var(--radio);margin-left:var(--s1);flex-shrink:0}
+.drw-loading{font-family:var(--fm);font-size:var(--txs);color:var(--txF);
+  text-align:center;padding:var(--s2) 0;animation:pulse 1.4s ease-in-out infinite}
+
+/* IN-APP PLAYER OVERLAY */
+.player-overlay{
+  position:fixed;bottom:0;left:0;right:0;max-width:240px;margin:0 auto;
+  background:var(--sur);border-top:2px solid var(--red);
+  z-index:100;display:none;flex-direction:column;
+}
+.player-overlay.visible{display:flex}
+.player-bar{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--s2) var(--s3);gap:var(--s2);flex-shrink:0}
+.player-info{flex:1;min-width:0}
+.player-stn{font-family:var(--fm);font-size:var(--tsm);font-weight:700;color:var(--tx);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.team-score{font-family:var(--font-mono);font-weight:700;font-size:var(--tmd);
-  min-width:22px;text-align:right;line-height:1}
-.team-score.win{color:var(--color-win)}
-.inn{font-family:var(--font-mono);font-size:var(--txs);color:var(--color-live);
-  min-width:36px;text-align:right;line-height:1.2}
-.inn.final{color:var(--color-text-faint)}
+.player-game{font-family:var(--fm);font-size:var(--txs);color:var(--txM)}
+.player-dot{width:6px;height:6px;border-radius:var(--rf);background:var(--radio);
+  flex-shrink:0;animation:pulse 1.8s ease-in-out infinite}
+.player-dot.playing{background:var(--live)}
+.player-close{font-size:var(--tsm);color:var(--txM);padding:2px 4px;
+  border-radius:var(--r);background:var(--surO)}
+.player-close:active{background:var(--surD)}
+.player-frame-wrap{height:52px;overflow:hidden;flex-shrink:0}
+.player-frame{width:100%;height:200px;border:none;transform:scale(1);transform-origin:top left}
 
-.listen-row{padding:var(--sp2) var(--sp3)}
-.listen-btn{display:flex;align-items:center;justify-content:center;gap:var(--sp1);
-  width:100%;padding:var(--sp2) 0;
-  background:color-mix(in oklch,var(--color-radio) 15%,var(--color-surface-offset));
-  border:1px solid color-mix(in oklch,var(--color-radio) 40%,var(--color-border));
-  color:var(--color-radio);border-radius:var(--radius-md);
-  font-family:var(--font-mono);font-size:var(--tsm);font-weight:700;
-  text-transform:uppercase;letter-spacing:.04em;cursor:pointer}
-.listen-btn:active{background:color-mix(in oklch,var(--color-radio) 25%,var(--color-surface-offset))}
-.listen-btn.active{
-  background:color-mix(in oklch,var(--color-primary) 15%,var(--color-surface-offset));
-  border-color:color-mix(in oklch,var(--color-primary) 40%,var(--color-border));
-  color:var(--color-primary)}
-
-.drawer{display:none;border-top:1px solid var(--color-divider);
-  background:var(--color-surface-2);padding:var(--sp1) var(--sp2) var(--sp2)}
-.drawer.open{display:block}
-.drawer-team{font-family:var(--font-mono);font-size:.5rem;font-weight:700;
-  text-transform:uppercase;letter-spacing:.06em;color:var(--color-primary);
-  padding:var(--sp1) var(--sp1) 2px;border-bottom:1px solid var(--color-divider);margin-bottom:2px}
-.stn-link{display:flex;align-items:center;justify-content:space-between;
-  padding:var(--sp1) var(--sp1);border-radius:var(--radius-md);margin-bottom:1px;
-  cursor:pointer;transition:background var(--tr)}
-.stn-link:active,.stn-link:hover{background:var(--color-surface-dynamic)}
-.stn-call{font-family:var(--font-mono);font-size:var(--tsm);font-weight:600;color:var(--color-text)}
-.stn-loc{font-family:var(--font-mono);font-size:.5rem;color:var(--color-text-faint)}
-.stn-arr{font-size:var(--txs);color:var(--color-radio);margin-left:var(--sp1);flex-shrink:0}
-
+/* SKELETON */
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-.skeleton{background:linear-gradient(90deg,var(--color-surface-offset) 25%,var(--color-surface-dynamic) 50%,var(--color-surface-offset) 75%);
-  background-size:200% 100%;animation:shimmer 1.4s ease-in-out infinite;border-radius:var(--radius-lg)}
-.skel-card{height:80px;margin-bottom:var(--sp2)}
+.skel{background:linear-gradient(90deg,var(--surO) 25%,var(--surD) 50%,var(--surO) 75%);
+  background-size:200% 100%;animation:shimmer 1.4s ease-in-out infinite;border-radius:.5rem}
+.skelc{height:80px;margin-bottom:var(--s2)}
 
-.empty-state{display:flex;flex-direction:column;align-items:center;text-align:center;
-  padding:var(--sp6) var(--sp4);color:var(--color-text-muted);gap:var(--sp2)}
-.empty-icon{font-size:2rem;opacity:.4}
-.empty-title{font-weight:600;font-size:var(--tmd);color:var(--color-text)}
-.empty-sub{font-size:var(--tsm);color:var(--color-text-muted)}
-.retry-btn{margin-top:var(--sp2);padding:var(--sp1) var(--sp3);
-  background:var(--color-surface-offset);border-radius:var(--radius-md);
-  font-size:var(--txs);font-weight:600;min-height:28px}
-.retry-btn:active{background:var(--color-surface-dynamic)}
+/* EMPTY/ERROR */
+.empty{display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:var(--s6) var(--s4);color:var(--txM);gap:var(--s2)}
+.eico{font-size:2rem;opacity:.4}
+.etitle{font-weight:600;font-size:var(--tmd);color:var(--tx)}
+.esub{font-size:var(--tsm);color:var(--txM)}
+.rbtn{margin-top:var(--s2);padding:var(--s1) var(--s3);background:var(--surO);
+  border-radius:var(--r);font-size:var(--txs);font-weight:600;min-height:28px}
+.rbtn:active{background:var(--surD)}
 
-.app-footer{display:flex;align-items:center;justify-content:space-between;
-  padding:var(--sp1) var(--sp3);background:var(--color-surface);
-  border-top:1px solid var(--color-divider);flex-shrink:0}
-.footer-text{font-size:var(--txs);color:var(--color-text-faint);font-family:var(--font-mono)}
-.cbar-wrap{flex:1;margin:0 var(--sp2);height:3px;background:var(--color-surface-offset);
-  border-radius:var(--radius-full);overflow:hidden}
-.cbar{height:100%;background:var(--color-primary);border-radius:var(--radius-full);transition:width 1s linear}
-.ref-st{font-size:var(--txs);font-family:var(--font-mono);color:var(--color-text-faint);min-width:28px;text-align:right}
+/* FOOTER */
+.ftr{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--s1) var(--s3);background:var(--sur);border-top:1px solid var(--div);flex-shrink:0}
+.ftxt{font-size:var(--txs);color:var(--txF);font-family:var(--fm)}
+.cbw{flex:1;margin:0 var(--s2);height:3px;background:var(--surO);border-radius:var(--rf);overflow:hidden}
+.cb{height:100%;background:var(--red);border-radius:var(--rf);transition:width 1s linear}
+.rst{font-size:var(--txs);font-family:var(--fm);color:var(--txF);min-width:28px;text-align:right}
 
-:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;border-radius:var(--radius-sm)}
-@media(prefers-reduced-motion:reduce){.live-dot,.skeleton{animation:none}.cbar{transition:none}}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px;border-radius:2px}
+@media(prefers-reduced-motion:reduce){.ldot,.skel,.player-dot{animation:none}.cb{transition:none}}
 </style>
 </head>
 <body>
 
-<header class="app-header">
-  <div class="header-logo">
+<header class="hdr">
+  <div class="hlogo">
     <svg width="18" height="18" viewBox="0 0 26 26" fill="none">
       <circle cx="13" cy="13" r="12" stroke="#c8102e" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/>
       <path d="M7 9.5C9 8 11 8.5 13 10.5C15 12.5 17 13 19 11.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
       <path d="M7 16.5C9 15 11 15.5 13 17.5C15 19.5 17 20 19 18.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
       <circle cx="13" cy="13" r="2.5" fill="#c8102e"/>
     </svg>
-    <div class="header-title"><span>MLB</span> R1 Radio</div>
+    <div class="htitle"><span>MLB</span> R1 Radio</div>
   </div>
-  <div class="header-controls">
-    <div class="live-dot"></div>
-    <button class="btn-icon" id="themeBtn" aria-label="Toggle theme">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  <div class="hctrl">
+    <div class="ldot"></div>
+    <button class="bico" id="themeBtn" aria-label="Toggle theme">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
-    <button class="btn-icon" id="refreshBtn" aria-label="Refresh">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.31-3.79"/></svg>
+    <button class="bico" id="refreshBtn" aria-label="Refresh">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.31-3.79"/></svg>
     </button>
   </div>
 </header>
 
-<div class="status-bar">
-  <span style="display:flex;flex-direction:column;align-items:flex-start">
-    <span class="vmwk">v2.0.0</span>
-    <span class="status-date" id="statusDate">Loading…</span>
-  </span>
-  <span class="status-text" id="statusGames">—</span>
+<div class="tabs">
+  <button class="tab" id="tab-yday" data-offset="-1">YDAY</button>
+  <button class="tab active" id="tab-today" data-offset="0">TODAY</button>
+  <button class="tab" id="tab-tom" data-offset="1">TMW</button>
 </div>
 
-<main class="main-scroll" id="mainScroll">
-  <div class="games-list" id="gamesList">
-    <div class="skeleton skel-card"></div>
-    <div class="skeleton skel-card"></div>
-    <div class="skeleton skel-card"></div>
-    <div class="skeleton skel-card"></div>
+<div class="sbar">
+  <span style="display:flex;flex-direction:column;align-items:flex-start">
+    <span class="vmwk">v3.0.0</span>
+    <span class="sdate" id="sdate">Loading…</span>
+  </span>
+  <span class="sgames" id="sgames">—</span>
+</div>
+
+<main class="scroll" id="mainScroll">
+  <div class="glist" id="glist">
+    <div class="skel skelc"></div>
+    <div class="skel skelc"></div>
+    <div class="skel skelc"></div>
   </div>
 </main>
 
-<footer class="app-footer">
-  <span class="footer-text">MLB Stats API</span>
-  <div class="cbar-wrap"><div class="cbar" id="cbar" style="width:100%"></div></div>
-  <span class="ref-st" id="refSt">–</span>
+<!-- In-app audio player overlay -->
+<div class="player-overlay" id="playerOverlay">
+  <div class="player-bar">
+    <div class="player-info">
+      <div class="player-stn" id="playerStn">—</div>
+      <div class="player-game" id="playerGame">—</div>
+    </div>
+    <div class="player-dot" id="playerDot"></div>
+    <button class="player-close" id="playerClose">✕</button>
+  </div>
+  <div class="player-frame-wrap">
+    <iframe class="player-frame" id="playerFrame" src="" allow="autoplay" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+  </div>
+</div>
+
+<footer class="ftr">
+  <span class="ftxt" id="ftxt">free-sportsradio.com</span>
+  <div class="cbw"><div class="cb" id="cb" style="width:100%"></div></div>
+  <span class="rst" id="rst">–</span>
 </footer>
 
 <script>
-// ── Radio stations per MLB team (free-sportsradio.com flagship stations) ──
-const RADIO = {
-  109: [{call:'KTAR 620 AM',loc:'Phoenix, AZ',url:'https://www.iheart.com/live/ktar-news-620-am-7182/'},{call:'KEDG 103.7 FM',loc:'Phoenix, AZ',url:'https://www.iheart.com/live/103-7-the-edge-phoenix-5598/'}],
-  144: [{call:'WCNN 680 AM',loc:'Atlanta, GA',url:'https://680thefan.audacy.com/'},{call:'WNNX 100.5 FM',loc:'Atlanta, GA',url:'https://680thefan.audacy.com/'}],
-  110: [{call:'WBAL 1090 AM',loc:'Baltimore, MD',url:'https://www.wbal.com/'},{call:'98 Rock',loc:'Baltimore, MD',url:'https://www.audacy.com/98rock'}],
-  111: [{call:'WEEI 93.7 FM',loc:'Boston, MA',url:'https://www.weei.com/'},{call:'WRKO 680 AM',loc:'Boston, MA',url:'https://www.wrko.com/'}],
-  112: [{call:'670 The Score',loc:'Chicago, IL',url:'https://www.audacy.com/670thescore'},{call:'WSCR 670 AM',loc:'Chicago, IL',url:'https://www.audacy.com/670thescore'}],
-  113: [{call:'WLW 700 AM',loc:'Cincinnati, OH',url:'https://www.iheartradio.com/wlw'},{call:'ESPN 1530',loc:'Cincinnati, OH',url:'https://www.espn1530.com/'}],
-  114: [{call:'WTAM 1100 AM',loc:'Cleveland, OH',url:'https://www.wtam.com/'},{call:'WMMS 100.7 FM',loc:'Cleveland, OH',url:'https://www.wmms.com/'}],
-  115: [{call:'KBME 790 AM',loc:'Houston, TX',url:'https://sportsradio610.com/'},{call:'Sports Radio 610',loc:'Houston, TX',url:'https://sportsradio610.com/'}],
-  116: [{call:'WXYT 97.1 FM',loc:'Detroit, MI',url:'https://971theticket.com/'},{call:'971 The Ticket',loc:'Detroit, MI',url:'https://971theticket.com/'}],
-  118: [{call:'KCSP 610 AM',loc:'Kansas City, MO',url:'https://610sports.com/'},{call:'610 Sports Radio',loc:'Kansas City, MO',url:'https://610sports.com/'}],
-  108: [{call:'KLAA 830 AM',loc:'Los Angeles, CA',url:'https://www.espnlosangeles.com/'},{call:'ESPN 710',loc:'Los Angeles, CA',url:'https://www.espnlosangeles.com/'}],
-  140: [{call:'KTCK 1310 AM',loc:'Dallas, TX',url:'https://www.theticket.com/'},{call:'The Ticket 1310',loc:'Dallas, TX',url:'https://www.theticket.com/'}],
-  142: [{call:'TIBN 96.3 FM',loc:'Minneapolis, MN',url:'https://www.audacy.com/963espn'},{call:'ESPN 96.3 FM',loc:'Minneapolis, MN',url:'https://www.audacy.com/963espn'}],
-  147: [{call:'WFAN 660 AM',loc:'New York, NY',url:'https://www.wfan.com/'},{call:'WCBS 880 AM',loc:'New York, NY',url:'https://www.radio.com/wcbs880'}],
-  133: [{call:'KHTK 1140 AM',loc:'Sacramento, CA',url:'https://www.audacy.com/sportsradio1140'},{call:'Sports Radio 1140',loc:'Sacramento, CA',url:'https://www.audacy.com/sportsradio1140'}],
-  146: [{call:'WINZ 940 AM',loc:'Miami, FL',url:'https://www.940winz.com/'},{call:'940 WINZ',loc:'Miami, FL',url:'https://www.940winz.com/'}],
-  158: [{call:'WTMJ 620 AM',loc:'Milwaukee, WI',url:'https://www.620wtmj.com/'},{call:'620 WTMJ',loc:'Milwaukee, WI',url:'https://www.620wtmj.com/'}],
-  121: [{call:'WFAN 101.9 FM',loc:'New York, NY',url:'https://www.wfan.com/'},{call:'SNY Radio',loc:'New York, NY',url:'https://www.wfan.com/'}],
-  143: [{call:'94 WIP 94.1 FM',loc:'Philadelphia, PA',url:'https://94wip.audacy.com/'},{call:'94 WIP AM 610',loc:'Philadelphia, PA',url:'https://94wip.audacy.com/'}],
-  134: [{call:'93.7 The Fan',loc:'Pittsburgh, PA',url:'https://937thefan.audacy.com/'},{call:'KDKA 1020 AM',loc:'Pittsburgh, PA',url:'https://www.audacy.com/kdka'}],
-  135: [{call:'KFMB 760 AM',loc:'San Diego, CA',url:'https://www.760kfmb.com/'},{call:'760 KFMB',loc:'San Diego, CA',url:'https://www.760kfmb.com/'}],
-  137: [{call:'KNBR 680 AM',loc:'San Francisco, CA',url:'https://www.knbr.com/'},{call:'KNBR 104.5 FM',loc:'San Francisco, CA',url:'https://www.knbr.com/'}],
-  136: [{call:'KCBS 740 AM',loc:'Seattle, WA',url:'https://www.710espn.com/'},{call:'710 ESPN Seattle',loc:'Seattle, WA',url:'https://www.710espn.com/'}],
-  138: [{call:'KMOX 1120 AM',loc:'St. Louis, MO',url:'https://www.kmox.com/'},{call:'KMOX 1120',loc:'St. Louis, MO',url:'https://www.kmox.com/'}],
-  139: [{call:'WDAE 95.3 FM',loc:'Tampa, FL',url:'https://www.audacy.com/wdae'},{call:'WDAE 620 AM',loc:'Tampa, FL',url:'https://www.audacy.com/wdae'}],
-  141: [{call:'Sportsnet 590',loc:'Toronto, ON',url:'https://www.sportsnet.ca/590/'},{call:'Fan 590 AM',loc:'Toronto, ON',url:'https://www.sportsnet.ca/590/'}],
-  120: [{call:'106.7 The Fan',loc:'Washington, DC',url:'https://www.1067thefan.com/'},{call:'WJFK 106.7 FM',loc:'Washington, DC',url:'https://www.1067thefan.com/'}],
-  117: [{call:'KCFH 105.7 FM',loc:'Denver, CO',url:'https://www.audacy.com/kckx'},{call:'KOA 850 AM',loc:'Denver, CO',url:'https://www.koacomm.com/'}],
-  119: [{call:'AM 570 LA Sports',loc:'Los Angeles, CA',url:'https://www.am570lasports.com/'},{call:'AM 570',loc:'Los Angeles, CA',url:'https://www.am570lasports.com/'}],
-  145: [{call:'670 The Score',loc:'Chicago, IL',url:'https://www.audacy.com/670thescore'},{call:'WSCR 670 AM',loc:'Chicago, IL',url:'https://www.audacy.com/670thescore'}],
-  // Athletics (Oakland/Sacramento)
-  133: [{call:'KHTK 1140 AM',loc:'Sacramento, CA',url:'https://www.audacy.com/sportsradio1140'}],
-  // Arizona
-  109: [{call:'KTAR 620 AM',loc:'Phoenix, AZ',url:'https://ktar.com/'}],
+// ── State ──
+const S = {
+  offset: 0,        // -1=yesterday, 0=today, 1=tomorrow
+  theme: 'dark',
+  focusIdx: 0,
+  countdown: 30,
+  timer: null,
+  stationMap: {},   // teamName -> [{call, slug}]
+  currentStn: null,
+  proxyCache: null
 };
 
-// Fallback for any team not in map
-function getStations(teamId, teamName) {
-  const s = RADIO[teamId];
-  if (s && s.length) return s;
-  // Generic fallback
-  const slug = teamName.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
-  return [{call:'Free Sports Radio',loc:'',url:`https://www.free-sportsradio.com/teams/${slug}`}];
+const PROXIES = [
+  u => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,
+  u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+  u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`
+];
+
+// ── Helpers ──
+function dateStr(offset) {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function fmtDate(offset) {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return d.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
+}
+function fmtTime(iso) {
+  if (!iso) return '';
+  return new Date(iso).toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', hour12:true});
+}
+function ordinal(n) {
+  const s = ['th','st','nd','rd'], v = n % 100;
+  return n + (s[(v-20)%10] || s[v] || s[0]);
+}
+function callToSlug(call) {
+  // "KNBR 680 AM" -> "knbr-680-am"
+  return call.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
 }
 
-const ABBR={
+const ABBR = {
   'Athletics':'ATH','Oakland Athletics':'ATH','Sacramento Athletics':'ATH',
   'Baltimore Orioles':'BAL','Boston Red Sox':'BOS','Chicago White Sox':'CWS',
   'Cleveland Guardians':'CLE','Detroit Tigers':'DET','Houston Astros':'HOU',
@@ -261,175 +293,312 @@ const ABBR={
   'Pittsburgh Pirates':'PIT','San Diego Padres':'SDP','San Francisco Giants':'SFG',
   'St. Louis Cardinals':'STL','Washington Nationals':'WSN'
 };
-function abbr(n){return ABBR[n]||(n||'').substring(0,3).toUpperCase()}
-function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function fmtTime(iso){if(!iso)return '';return new Date(iso).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true})}
-function ordinal(n){const s=['th','st','nd','rd'],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0])}
+function abbr(n) { return ABBR[n] || (n||'').substring(0,3).toUpperCase(); }
 
-const REFRESH=30;
-let st={games:[],focusIndex:0,theme:'dark',countdown:REFRESH,timer:null};
-
-// R1 scroll wheel
-window.addEventListener('keydown',e=>{
-  if(e.key==='ArrowUp'||e.key==='AudioVolumeUp'){setFocus(st.focusIndex-1);e.preventDefault()}
-  else if(e.key==='ArrowDown'||e.key==='AudioVolumeDown'){setFocus(st.focusIndex+1);e.preventDefault()}
-  else if(e.key==='Enter'||e.key===' '){const c=getCards();if(c[st.focusIndex])toggleCard(c[st.focusIndex]);e.preventDefault()}
-});
-
-function getCards(){return Array.from(document.querySelectorAll('.game-card'))}
-function setFocus(idx){
-  const cards=getCards();if(!cards.length)return;
-  idx=Math.max(0,Math.min(idx,cards.length-1));st.focusIndex=idx;
-  cards.forEach((c,i)=>c.classList.toggle('focused',i===idx));
-  cards[idx].scrollIntoView({block:'nearest',behavior:'auto'});
-}
-function toggleCard(card){
-  const drw=card.querySelector('.drawer'),btn=card.querySelector('.listen-btn');
-  const open=drw.classList.contains('open');
-  document.querySelectorAll('.drawer.open').forEach(d=>d.classList.remove('open'));
-  document.querySelectorAll('.listen-btn.active').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.game-card.open').forEach(c=>c.classList.remove('open'));
-  if(!open){drw.classList.add('open');btn.classList.add('active');card.classList.add('open');
-    btn.innerHTML=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg> Hide`;}
-  else{btn.innerHTML=listenHTML();}
-}
-function listenHTML(){return `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1"/><path d="M19 12a7 7 0 1 1-14 0 7 7 0 0 1 14 0"/><path d="M12 5v1M12 18v1M5 12H4M20 12h-1"/></svg> 📻 Listen`}
-
-async function loadGames(){
-  document.getElementById('refreshBtn').style.opacity='0.4';
-  const d=new Date();
-  document.getElementById('statusDate').textContent=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-  try{
-    const r=await fetch(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${today()}&hydrate=linescore,flags`);
-    if(!r.ok)throw new Error('API error');
-    const data=await r.json();
-    const games=(data.dates||[])[0]?.games||[];
-    st.games=games;
-    renderGames(games);
-    const live=games.filter(g=>g.status?.abstractGameCode==='L').length;
-    document.getElementById('statusGames').textContent=`${games.length} game${games.length!==1?'s':''}${live>0?` · ${live} LIVE`:''}`;
-  }catch(err){
-    document.getElementById('gamesList').innerHTML=`
-      <div class="empty-state">
-        <div class="empty-icon">📡</div>
-        <div class="empty-title">Could not load</div>
-        <div class="empty-sub">${err.message||'Check Wi-Fi'}</div>
-        <button class="retry-btn" onclick="loadGames()">Retry</button>
-      </div>`;
+// ── Proxy fetch with fallbacks ──
+async function proxyFetch(targetUrl) {
+  for (const buildUrl of PROXIES) {
+    try {
+      const r = await fetch(buildUrl(targetUrl), {signal: AbortSignal.timeout(6000)});
+      if (!r.ok) continue;
+      const j = await r.json();
+      // allorigins returns {contents}, codetabs/corsproxy return text directly
+      const html = j.contents || j;
+      if (typeof html === 'string' && html.length > 100) return html;
+    } catch(e) { continue; }
   }
-  document.getElementById('refreshBtn').style.opacity='1';
-  resetCountdown();
+  return null;
 }
 
-function statusCls(g){const c=g.status?.abstractGameCode;return c==='L'?'live':c==='F'?'final':'sched'}
-function statusLabel(g){
-  const s=g.status,c=s?.abstractGameCode;
-  if(c==='L'){const ls=g.linescore;if(!ls)return 'LIVE';return `${ls.isTopInning?'▲':'▼'}${ls.currentInning||''}`}
-  if(c==='F')return 'FINAL';
-  return fmtTime(g.gameDate)||'SCHED';
+// ── Scrape station data from free-sportsradio.com ──
+async function fetchStations() {
+  if (S.proxyCache) return S.proxyCache;
+  const html = await proxyFetch('https://www.free-sportsradio.com/scores/mlb');
+  if (!html) return {};
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const map = {};
+
+  // The site groups stations under each game.
+  // Pattern: team name heading -> station callsign lines
+  const text = doc.body ? (doc.body.innerText || doc.body.textContent || '') : '';
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l);
+
+  let currentTeam = null;
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i];
+    // Station callsign: e.g. "KNBR 680 AM" or "WTMJ 620 AM"
+    if (l.match(/^[A-Z0-9]{2,6}\s+[\d.]+\s*(AM|FM)/i)) {
+      if (currentTeam) {
+        if (!map[currentTeam]) map[currentTeam] = [];
+        map[currentTeam].push({ call: l, slug: callToSlug(l) });
+      }
+    }
+    // Team name: short all-caps or title-case words, no digits
+    else if (l.match(/^[A-Z][a-zA-Z\-]+(?:\s[A-Z][a-zA-Z]+)*$/) && !l.match(/\d/) && l.length < 24 &&
+      !['Final','Top','Bottom','Middle','End','Pre','Warmup','Delayed','Postponed',
+        'Game','Listen','Now','Scores','Radio','Broadcast','TV','MLB','NFL','NBA','NHL'].includes(l)) {
+      currentTeam = l;
+    }
+  }
+
+  S.proxyCache = map;
+  return map;
 }
 
-function renderGames(games){
-  const list=document.getElementById('gamesList');
-  if(!games.length){
-    list.innerHTML=`<div class="empty-state"><div class="empty-icon">⚾</div><div class="empty-title">No games today</div><div class="empty-sub">Check back on a game day!</div></div>`;
+// ── MLB Stats API ──
+async function fetchGames(offset) {
+  const r = await fetch(`https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=${dateStr(offset)}&hydrate=linescore`);
+  if (!r.ok) throw new Error('MLB API error');
+  const data = await r.json();
+  return (data.dates || [])[0]?.games || [];
+}
+
+// ── Render ──
+function statusCls(g) {
+  const c = g.status?.abstractGameCode;
+  return c === 'L' ? 'live' : c === 'F' ? 'final' : 'sched';
+}
+function statusLabel(g) {
+  const c = g.status?.abstractGameCode;
+  if (c === 'L') {
+    const ls = g.linescore;
+    if (!ls) return 'LIVE';
+    return `${ls.isTopInning ? '▲' : '▼'}${ls.currentInning || ''}`;
+  }
+  if (c === 'F') return 'FINAL';
+  return fmtTime(g.gameDate) || 'SCHED';
+}
+
+function renderGames(games, stationMap) {
+  const list = document.getElementById('glist');
+  if (!games.length) {
+    list.innerHTML = `<div class="empty"><div class="eico">⚾</div><div class="etitle">No games</div><div class="esub">Check back another day!</div></div>`;
     return;
   }
-  const order={L:0,P:1,F:2};
-  const sorted=[...games].sort((a,b)=>(order[a.status?.abstractGameCode]??1)-(order[b.status?.abstractGameCode]??1));
+  const order = {L:0, P:1, F:2};
+  const sorted = [...games].sort((a,b) => (order[a.status?.abstractGameCode]??1)-(order[b.status?.abstractGameCode]??1));
 
-  list.innerHTML=sorted.map((g,idx)=>{
-    const away=g.teams?.away,home=g.teams?.home;
-    const sc=statusCls(g),sl=statusLabel(g);
-    const ls=g.linescore;
-    const isLive=g.status?.abstractGameCode==='L';
-    const isFinal=g.status?.abstractGameCode==='F';
-    const awaySc=away?.score??(isLive||isFinal?0:'');
-    const homeSc=home?.score??(isLive||isFinal?0:'');
-    const awayWin=(isFinal||isLive)&&(away?.score||0)>(home?.score||0);
-    const homeWin=(isFinal||isLive)&&(home?.score||0)>(away?.score||0);
-    let innHTML='';
-    if(isLive&&ls)innHTML=`${ls.isTopInning?'▲':'▼'} ${ordinal(ls.currentInning||1)}<br><span style="font-size:.55rem;opacity:.7">${ls.outs??0} out${(ls.outs??0)!==1?'s':''}</span>`;
-    else if(isFinal)innHTML='F';
-    else innHTML=fmtTime(g.gameDate)||'—';
+  list.innerHTML = sorted.map((g, idx) => {
+    const away = g.teams?.away, home = g.teams?.home;
+    const sc = statusCls(g), sl = statusLabel(g);
+    const ls = g.linescore;
+    const isLive = g.status?.abstractGameCode === 'L';
+    const isFinal = g.status?.abstractGameCode === 'F';
+    const awayName = away?.team?.name || 'Away', homeName = home?.team?.name || 'Home';
+    const awaySc = away?.score ?? (isLive||isFinal ? 0 : '');
+    const homeSc = home?.score ?? (isLive||isFinal ? 0 : '');
+    const awayW = (isFinal||isLive) && (away?.score||0) > (home?.score||0);
+    const homeW = (isFinal||isLive) && (home?.score||0) > (away?.score||0);
 
-    // Build stations drawer
-    const awayId=away?.team?.id,homeId=home?.team?.id;
-    const awayName=away?.team?.name||'Away',homeName=home?.team?.name||'Home';
-    const awayStn=getStations(awayId,awayName);
-    const homeStn=getStations(homeId,homeName);
-
-    function stnHTML(name,stations){
-      return `<div class="drawer-team">${name}</div>`+
-        stations.map(s=>`<a href="${s.url}" target="_blank" class="stn-link">
-          <span class="stn-call">${s.call}</span>
-          <span style="display:flex;align-items:center;gap:2px">
-            <span class="stn-loc">${s.loc}</span>
-            <span class="stn-arr">▶</span>
-          </span></a>`).join('');
+    let innHTML = '';
+    if (isLive && ls) {
+      innHTML = `${ls.isTopInning?'▲':'▼'} ${ordinal(ls.currentInning||1)}<br><span style="font-size:.55rem;opacity:.7">${ls.outs??0}out</span>`;
+    } else if (isFinal) {
+      innHTML = 'F';
+    } else {
+      innHTML = fmtTime(g.gameDate) || '—';
     }
 
-    return `<div class="game-card" data-idx="${idx}">
-      <div class="game-card-header">
-        <span class="badge badge-${sc}">${sl}</span>
-        <span class="game-venue">${g.venue?.name||''}</span>
+    // Stations for this game — look up by team name variations
+    const awayStn = stationMap[awayName] || stationMap[awayName.split(' ').pop()] || [];
+    const homeStn = stationMap[homeName] || stationMap[homeName.split(' ').pop()] || [];
+    const allStn = [...awayStn.map(s=>({...s,team:awayName})), ...homeStn.map(s=>({...s,team:homeName}))];
+
+    let drawerContent = '';
+    if (allStn.length === 0) {
+      drawerContent = `<div class="drw-loading">Loading stations… or tap to open site</div>
+        <button class="stn" onclick="openSite('${awayName}','${homeName}')">
+          <span class="scall">Open free-sportsradio.com</span>
+          <span class="sarr">▶</span>
+        </button>`;
+    } else {
+      let lastTeam = '';
+      allStn.forEach(s => {
+        if (s.team !== lastTeam) {
+          drawerContent += `<div class="drw-team">${s.team}</div>`;
+          lastTeam = s.team;
+        }
+        drawerContent += `<button class="stn" onclick="playStation('${s.slug}','${s.call}','${awayName} @ ${homeName}')">
+          <span class="scall">${s.call}</span>
+          <span class="sarr">▶</span>
+        </button>`;
+      });
+      drawerContent += `<button class="stn" style="opacity:.5;margin-top:2px" onclick="openSite('${awayName}','${homeName}')">
+        <span class="scall">More stations…</span><span class="sarr">▶</span>
+      </button>`;
+    }
+
+    return `<div class="gc" data-idx="${idx}">
+      <div class="gch">
+        <span class="badge b${sc[0]}">${sl}</span>
+        <span class="gvenue">${g.venue?.name||''}</span>
       </div>
-      <div class="game-matchup">
-        <div class="team-row">
-          <span class="team-abbr">${abbr(awayName)}</span>
-          <span class="team-name">${awayName}</span>
-          <span class="team-score${awayWin?' win':''}">${awaySc}</span>
-          <span style="min-width:36px"></span>
+      <div class="gmatch">
+        <div class="trow">
+          <span class="tabb">${abbr(awayName)}</span>
+          <span class="tname">${awayName}</span>
+          <span class="tscore${awayW?' win':''}">${awaySc}</span>
+          <span style="min-width:38px"></span>
         </div>
-        <div class="team-row">
-          <span class="team-abbr">${abbr(homeName)}</span>
-          <span class="team-name">${homeName}</span>
-          <span class="team-score${homeWin?' win':''}">${homeSc}</span>
-          <div class="inn${isFinal?' final':''}" style="min-width:36px;text-align:right">${innHTML}</div>
+        <div class="trow">
+          <span class="tabb">${abbr(homeName)}</span>
+          <span class="tname">${homeName}</span>
+          <span class="tscore${homeW?' win':''}">${homeSc}</span>
+          <div class="inn${isFinal?' fin':''}" style="min-width:38px;text-align:right">${innHTML}</div>
         </div>
       </div>
-      <div class="listen-row">
-        <button class="listen-btn">${listenHTML()}</button>
+      <div class="lrow">
+        <button class="lbtn">${listenHTML()}</button>
       </div>
-      <div class="drawer">
-        ${stnHTML(awayName,awayStn)}
-        ${stnHTML(homeName,homeStn)}
-        <div style="margin-top:4px">
-          <a href="https://www.free-sportsradio.com/scores/mlb" target="_blank" class="stn-link" style="opacity:.6">
-            <span class="stn-call">More stations…</span>
-            <span class="stn-arr">▶</span>
-          </a>
-        </div>
-      </div>
+      <div class="drw">${drawerContent}</div>
     </div>`;
   }).join('');
 
-  document.querySelectorAll('.game-card').forEach(card=>{
-    card.querySelector('.listen-btn')?.addEventListener('click',()=>toggleCard(card));
+  document.querySelectorAll('.gc').forEach(card => {
+    card.querySelector('.lbtn')?.addEventListener('click', () => toggleCard(card));
   });
-  setFocus(Math.min(st.focusIndex,sorted.length-1));
+  setFocus(Math.min(S.focusIdx, sorted.length - 1));
 }
 
-function resetCountdown(){
-  st.countdown=REFRESH;clearInterval(st.timer);
-  st.timer=setInterval(()=>{
-    st.countdown--;
-    document.getElementById('cbar').style.width=(st.countdown/REFRESH*100)+'%';
-    document.getElementById('refSt').textContent=st.countdown+'s';
-    if(st.countdown<=0){clearInterval(st.timer);loadGames();}
-  },1000);
+function listenHTML() {
+  return `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1"/><path d="M19 12a7 7 0 1 1-14 0 7 7 0 0 1 14 0"/><path d="M12 5v1M12 18v1M5 12H4M20 12h-1"/></svg> 📻 Listen`;
 }
 
-document.getElementById('refreshBtn').addEventListener('click',loadGames);
-document.getElementById('themeBtn').addEventListener('click',()=>{
-  st.theme=st.theme==='dark'?'light':'dark';
-  document.documentElement.setAttribute('data-theme',st.theme);
-  document.getElementById('themeBtn').innerHTML=st.theme==='dark'
-    ?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
-    :'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+// ── Card toggle ──
+function toggleCard(card) {
+  const drw = card.querySelector('.drw'), btn = card.querySelector('.lbtn');
+  const wasOpen = drw.classList.contains('open');
+  document.querySelectorAll('.drw.open').forEach(d => d.classList.remove('open'));
+  document.querySelectorAll('.lbtn.active').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.gc.open').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) {
+    drw.classList.add('open');
+    btn.classList.add('active');
+    card.classList.add('open');
+    btn.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg> Hide`;
+  } else {
+    btn.innerHTML = listenHTML();
+  }
+}
+
+// ── In-app audio player ──
+function playStation(slug, callSign, gameLabel) {
+  const url = `https://www.free-sportsradio.com/listen/${slug}`;
+  document.getElementById('playerStn').textContent = callSign;
+  document.getElementById('playerGame').textContent = gameLabel;
+  document.getElementById('playerFrame').src = url;
+  document.getElementById('playerDot').classList.add('playing');
+  document.getElementById('playerOverlay').classList.add('visible');
+  // Shrink footer to make room
+  document.getElementById('ftxt').textContent = '▶ ' + callSign;
+  S.currentStn = slug;
+  // Highlight active station button
+  document.querySelectorAll('.stn').forEach(b => b.classList.remove('playing'));
+  document.querySelectorAll('.stn').forEach(b => {
+    if (b.getAttribute('onclick')?.includes(slug)) b.classList.add('playing');
+  });
+}
+
+function openSite(away, home) {
+  window.open('https://www.free-sportsradio.com/scores/mlb', '_blank');
+}
+
+document.getElementById('playerClose').addEventListener('click', () => {
+  document.getElementById('playerOverlay').classList.remove('visible');
+  document.getElementById('playerFrame').src = '';
+  document.getElementById('playerDot').classList.remove('playing');
+  document.getElementById('ftxt').textContent = 'free-sportsradio.com';
+  S.currentStn = null;
+  document.querySelectorAll('.stn.playing').forEach(b => b.classList.remove('playing'));
 });
 
-loadGames();
+// ── Focus / scroll wheel ──
+function getCards() { return Array.from(document.querySelectorAll('.gc')); }
+function setFocus(idx) {
+  const cards = getCards();
+  if (!cards.length) return;
+  idx = Math.max(0, Math.min(idx, cards.length - 1));
+  S.focusIdx = idx;
+  cards.forEach((c, i) => c.classList.toggle('focused', i === idx));
+  cards[idx].scrollIntoView({block:'nearest', behavior:'auto'});
+}
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowUp' || e.key === 'AudioVolumeUp') { setFocus(S.focusIdx-1); e.preventDefault(); }
+  else if (e.key === 'ArrowDown' || e.key === 'AudioVolumeDown') { setFocus(S.focusIdx+1); e.preventDefault(); }
+  else if (e.key === 'Enter' || e.key === ' ') { const c = getCards(); if (c[S.focusIdx]) toggleCard(c[S.focusIdx]); e.preventDefault(); }
+});
+
+// ── Load ──
+async function load() {
+  document.getElementById('refreshBtn').style.opacity = '0.4';
+  document.getElementById('sdate').textContent = fmtDate(S.offset);
+  document.getElementById('glist').innerHTML = '<div class="skel skelc"></div><div class="skel skelc"></div><div class="skel skelc"></div>';
+
+  try {
+    // Fetch games + stations in parallel
+    const [games, stationMap] = await Promise.all([
+      fetchGames(S.offset),
+      fetchStations()
+    ]);
+    renderGames(games, stationMap);
+    const live = games.filter(g => g.status?.abstractGameCode === 'L').length;
+    document.getElementById('sgames').textContent =
+      `${games.length} game${games.length!==1?'s':''}${live>0?` · ${live} LIVE`:''}`;
+  } catch(err) {
+    document.getElementById('glist').innerHTML = `
+      <div class="empty">
+        <div class="eico">📡</div>
+        <div class="etitle">Could not load</div>
+        <div class="esub">${err.message || 'Check Wi-Fi'}</div>
+        <button class="rbtn" onclick="load()">Retry</button>
+      </div>`;
+  }
+  document.getElementById('refreshBtn').style.opacity = '1';
+  // Only auto-refresh on today tab
+  if (S.offset === 0) resetCountdown();
+}
+
+function resetCountdown() {
+  clearInterval(S.timer);
+  S.countdown = 30;
+  S.timer = setInterval(() => {
+    S.countdown--;
+    document.getElementById('cb').style.width = (S.countdown / 30 * 100) + '%';
+    document.getElementById('rst').textContent = S.countdown + 's';
+    if (S.countdown <= 0) { clearInterval(S.timer); load(); }
+  }, 1000);
+}
+
+// ── Tabs ──
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    S.offset = parseInt(tab.dataset.offset);
+    S.focusIdx = 0;
+    clearInterval(S.timer);
+    if (S.offset !== 0) {
+      document.getElementById('cb').style.width = '100%';
+      document.getElementById('rst').textContent = '–';
+    }
+    load();
+  });
+});
+
+// ── Theme toggle ──
+document.getElementById('themeBtn').addEventListener('click', () => {
+  S.theme = S.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', S.theme);
+  document.getElementById('themeBtn').innerHTML = S.theme === 'dark'
+    ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+    : '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+});
+
+document.getElementById('refreshBtn').addEventListener('click', load);
+
+// Boot
+load();
 </script>
 </body>
 </html>
